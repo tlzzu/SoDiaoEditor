@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title></title>
+
+    <!-- lib/jquery -->
+    <script type="text/javascript" src="http://word.baidu.com/static/lib/jquery-1.11.1.min.js?v=1415334923734"></script>
+
+    <script type="text/javascript" charset="utf-8" src="../../ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="editor_api.js"></script>
+      <!-- lib/fui & static/toolbar -->
+    <script src="http://word.baidu.com/static/lib/jhtmls/jhtmls.min.js?v=1415334923734"></script>
+    <script src="http://word.baidu.com/static/lib/fui/fui.all.min.js?v=1415334923734"></script>
+    <link rel="stylesheet" type="text/css" href="http://word.baidu.com/static/lib/fui/theme/default/fui.min.css?v=1415334923734">
+
+    <!-- wordonline -->
+    <link rel="stylesheet" href="http://word.baidu.com/static/assets/style/wordonline.min.css?v=1415334923734"/>
+    <!--<script src="http://word.baidu.com/static/js/wordonline.min.js?v=1451384596764"></script>-->
+    <script src="wordonline.min.js?v=1451384596764"></script>
+
+    <!-- index.php -->
+    <link rel="stylesheet" href="http://word.baidu.com/static/assets/style/public.css?v=1415334923734"/>
+    <link rel="stylesheet" href="http://word.baidu.com/static/assets/style/index.css?v=1415334923734"/>
+</head>
+<body>
+    <div id="toolbar" class="toolbar"></div>
+
+    <div class="main">
+        <div class="container editor">
+            <script id="wordeditor" class="wordeditor" type="text/plain" style="width:900px;height:1110px;"></script>
+        </div>
+        <div class="footer">
+            Baidu Doc&nbsp;&copy;&nbsp;百度 FEX
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        UE.getEditor('wordeditor');
+        $(function (){
+            WO.render('toolbar', 'wordeditor');
+        });
+    </script>
+
+</body>
+
+
+</html>

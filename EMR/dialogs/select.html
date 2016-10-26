@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>下拉单选输入框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+   
+    <script src="../internal.js?dd=132"></script>
+    <script src="jscolor-2.0.4/jscolor.min.js"></script>
+    <script src="js/jQuery.v3.1.2-pre.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="content">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th><span>控件ID</span><span class="label label-important">*</span></th>
+                <th><span>控件名称</span><span class="label label-important">*</span></th>
+            </tr>
+            <tr>
+                <td><input type="text" id="txtID" placeholder="必填项"></td>
+                <td><input type="text" id="txtNAME" onchange="$G('txtDESCNAME').value = $G('txtNAME').value" placeholder="必填项"></td>
+            </tr>
+            <tr>
+                <th><span>标签</span> </th>
+                <th><span>描述名</span> </th>
+            </tr>
+            <tr>
+                <td><input type="text" id="txtTAG" placeholder="标签,多个用逗号隔开"></td>
+                <td><input type="text" id="txtDESCNAME" placeholder="描述名"></td>
+            </tr>
+            <!--<tr>
+                <th><span>数据类型</span> </th>
+                <th><span>默认值</span> </th>
+            </tr>
+            <tr>
+                <td>
+                    <select id="txtVERIFYTYPE">
+                        <option value="text" selected="selected">普通文本</option>
+                        <option value="email">邮箱地址</option>
+                        <option value="int">整数</option>
+                        <option value="float">小数</option>
+                        <option value="idcard">身份证号码</option>
+                    </select>
+                </td>
+                <td><input type="text" id="txtVALUE" placeholder="默认值"></td>
+            </tr>-->
+            <tr>
+                <th><span>是否必填</span> </th>
+                <th><span>可补充</span> </th>
+            </tr>
+            <tr>
+                <td>
+                    <label class="checkbox inline"><input id="txtREQUIRED" type="checkbox" /> 必填 </label>
+                </td>
+                <td>
+                    <label class="checkbox inline"><input id="txtFREEINPUT" type="checkbox" /> 可补充 </label>
+                </td>
+            </tr>
+            <tr>
+                <th><span>字体颜色</span> </th>
+                <th><span>默认值</span> </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtCOLOR" class="jscolor" placeholder="颜色" value="000000">
+                </td>
+                <td>
+                    <div class="input-append">
+                        <input type="text"  id="txtDEFAULTVALUE" readonly="readonly" placeholder="默认值"><a title="删除" class="btn" href="#" onclick="deleteDefaultOption()"><i class="icon-trash"></i></a>
+                    </div>
+</td>
+            </tr>
+            <!--<tr>
+                <th colspan="2"><span>数据</span> </th>
+            </tr>-->
+            <tr>
+                <td colspan="2">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1" onclick="$G('txtREMOTEURL').value = '';" data-toggle="tab" >固定选项</a></li>
+                            <li><a href="#tab2" data-toggle="tab">动态数据</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <select id="txtBINDINGDATA" style="width:100%;" multiple="multiple" onclick="BINDINGDATAClick(this)" class="span14">
+                                    <!--<option value="111">1111</option>
+                                    <option value="222">2222</option>-->
+                                </select>
+                                <div class="input-prepend">
+                                    <div class="input-append" style="margin-right:10px;">
+                                        <button class="btn disabled" type="button">值</button>
+                                        <input type="text" id="txtInputValue" onchange="(($G('txtInputDesc').value=='')?$G('txtInputDesc').value = $G('txtInputValue').value:'')" class="span2" placeholder="值" style="width:100px;border-radius:0 4px 4px 0;" />
+                                    </div>
+                                    <div class="input-append" style="margin-right:10px;">
+                                        <button class="btn disabled" type="button">描述</button>
+                                        <input type="text" id="txtInputDesc" class="span2" placeholder="描述" style="width:100px;border-radius:0 4px 4px 0;" />
+                                    </div>
+                                    <div class="btn-group pull-right">
+                                        <a title="添加" class="btn btn-primary" onclick="add()" href="#"><i class="icon-white icon-plus"></i></a>
+                                        <a title="编辑" class="btn" href="#" onclick="edit()"><i class="icon-edit"></i></a>
+                                        <a title="上移" class="btn" href="#" onclick="upMove()"><i class="icon-arrow-up"></i></a>
+                                        <a title="下移" class="btn" href="#" onclick="downMove()"><i class="icon-arrow-down"></i></a>
+                                        <a title="设置默认" class="btn" href="#" onclick="setDefault()"><i class="icon-ok-circle"></i></a>
+                                        <a title="删除" class="btn" href="#" onclick="deleteOption()"><i class="icon-trash"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <input type="text" placeholder="支持get请求的完整url地址（http://）" style="width:90%;" id="txtREMOTEURL"/>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <script type="text/javascript">
+        function BINDINGDATAClick(t) {
+            if (t.selectedIndex < 0)//点击了 但是没有选中项
+                return;
+            $G('txtInputValue').value = t.value;
+            $G('txtInputDesc').value = t.options[t.selectedIndex].text;
+        }
+        function add() {
+            var ss = $G('txtBINDINGDATA');
+            //if (ss.selectedIndex < 0)
+            //    return;
+            //判断是否重复
+            var tempoptions = ss.options, iscan = true, txtInputValue = $G('txtInputValue').value, txtInputDesc = $G('txtInputDesc').value;
+            //debugger;
+            for (var i = 0, l = tempoptions.length; i < l; i++) {
+                if (tempoptions[i].value == txtInputValue) {
+                    alert(txtInputValue + '值已经存在，值不可重复');
+                    iscan = false;
+                } else if (tempoptions[i].text == txtInputDesc) {
+                    alert(txtInputDesc + '描述已经存在，描述不可重复');
+                    iscan = false;
+                }
+                if (!iscan) break;
+            }
+            if (iscan) {
+                var option = document.createElement("option");
+                option.text = $G('txtInputDesc').value;
+                option.value = $G('txtInputValue').value;
+                if (option.text == '') {
+                    alert('添加描述不可谓空！');
+                    return;
+                }
+                if (option.value == '') {
+                    alert('添加值不可谓空！');
+                    return;
+                }
+                try {
+                    // 对于更早的版本IE8 
+                    tempoptions.add(option, x.options[null]);
+                } catch (e) {
+                    tempoptions.add(option, null);
+                }
+            }
+            $G('txtInputValue').value = '';
+            $G('txtInputDesc').value = '';
+        }
+        function edit() {
+            var ss = $G('txtBINDINGDATA');
+            if (ss.selectedIndex < 0)
+                return;
+            //判断是否重复
+            var tempoptions = ss.options, iscan = true, txtInputValue = $G('txtInputValue').value, txtInputDesc = $G('txtInputDesc').value;
+            if (txtInputDesc == '') {
+                alert('修改描述不可谓空！');
+                return;
+            }
+            if (txtInputValue == '') {
+                alert('修改值不可谓空！');
+                return;
+            }
+            for (var i = 0, l = tempoptions.length; i < l; i++) {
+                if (i != ss.selectedIndex) {//不能有相同的
+                    if (tempoptions[i].value == txtInputValue) {
+                        alert(txtInputValue+'值已经存在，值不可重复');
+                        iscan = false;
+                    } else if (tempoptions[i].text == txtInputDesc) {
+                        alert(txtInputDesc + '描述已经存在，描述不可重复');
+                        iscan = false;
+                    }
+                }
+                if(!iscan) break;
+            }
+            if (iscan) {
+                ss.options[ss.selectedIndex].value = txtInputValue;
+                ss.options[ss.selectedIndex].text = txtInputDesc;
+            }
+            $G('txtInputValue').value = '';
+            $G('txtInputDesc').value = '';
+        }
+        function upMove() {
+            var ss = $G('txtBINDINGDATA');
+            if (ss.selectedIndex < 0)
+                return;
+            if (ss.selectedIndex == 0) return;
+            var currentIndex = ss.selectedIndex;
+            var opt = ss.options[currentIndex - 1];
+            ss.options.remove(currentIndex - 1);
+            ss.options.add(opt, currentIndex);
+        }
+        function deleteDefaultOption() {
+            var doc = $G('txtDEFAULTVALUE');
+            doc.value = '';
+            doc.setAttribute('tl-value', '');
+        }
+        function downMove() {
+            var ss = $G('txtBINDINGDATA');
+            if (ss.selectedIndex < 0)
+                return;
+            if (ss.selectedIndex+1==ss.options.length) return;
+            var currentIndex = ss.selectedIndex;
+            var opt = ss.options[currentIndex + 1];
+            ss.options.remove(currentIndex + 1);
+            ss.options.add(opt, currentIndex);
+        }
+        function setDefault() {
+            var ss = $G('txtBINDINGDATA');
+            if (ss.selectedIndex < 0)
+                return;
+            $G('txtDEFAULTVALUE').setAttribute('tl-value', ss.value);
+            $G('txtDEFAULTVALUE').value = ss.value + '|' + ss.options[ss.selectedIndex].text;//默认值value|desc
+        }
+        function deleteOption() {
+            var ss = $G('txtBINDINGDATA');
+            if (ss.selectedIndex < 0)
+                return;
+            if ($G('txtDEFAULTVALUE').getAttribute('tl-value') == ss.value) {
+                $G('txtDEFAULTVALUE').setAttribute('tl-value', '');
+                $G('txtDEFAULTVALUE').value = '';
+            }
+            ss.options.remove(ss.selectedIndex);
+        }
+        (function (UE) {
+            var oNode = null, thePlugins = 'tl_select';
+            //初始化加载之前编辑的数据
+            window.onload = function () {
+                if (UE.plugins[thePlugins].editdom) {
+                    oNode = UE.plugins[thePlugins].editdom;
+                    var json = JSON.parse(oNode.getAttribute('tl-model'));
+                    if (!json || json == null) {
+                        alert("无法json序列化！");
+                        return;
+                    }
+                    $G('txtID').value = json.ID;
+                    $G('txtNAME').value = json.NAME;
+                    $G('txtCOLOR').value = json.COLOR;
+                    $G('txtTAG').value = json.TAG;
+                    $G('txtDESCNAME').value = json.DESCNAME;
+                    $G('txtDEFAULTVALUE').setAttribute('tl-value', json.VALUE);
+                    if (json.VALUE != null && json.VALUE != '') {
+                        $G('txtDEFAULTVALUE').value = json.VALUE + '|' + json.TEXT;//默认值value|desc
+                    }
+                    $G('txtREMOTEURL').value = json.REMOTEURL;
+                    if (json.REQUIRED == 1) {
+                        $G('txtREQUIRED').checked = true;
+                    }
+                    if (json.FREEINPUT == 1) {
+                        $G('txtFREEINPUT').checked = true;
+                    }
+                    var html = [];
+                    var datas = json.BINDINGDATA;
+                    if (datas && datas != undefined && datas != null) {
+                        for (var i = 0, l = datas.length; i < l; i++) {
+                            html.push('<option value="' + datas[i].VALUE + '" ')
+                            if (datas[i].SELECTED != undefined && datas[i].SELECTED == 1) {
+                                html.push(' selected="selected" ');
+                            }
+                            html.push('>' + datas[i].TEXT + '</option>');
+                        }
+                    }
+                    $G('txtBINDINGDATA').innerHTML = html.join('');
+                    $G('txtID').setAttribute('readonly', 'readonly');
+                }
+                $G('txtID').focus();
+            };
+            function makeHtml(json) {
+                var isClear = 1, show = json.DESCNAME == '' ? ' ' : json.DESCNAME;
+                if (json.VALUE != '') {
+                    show = json.TEXT;
+                    isClear = 0;
+                }
+                if (json.READONLY == 1)
+                    isClear = 0;
+                var html = '<span class="tl-left" style="color:#0000FF' +
+                  // ((json.READONLY == 1) ? '#808080' : '#0000FF') +
+                    '" contenteditable="false">[</span><span title="' + json.DESCNAME + '" style="color:#' + json.COLOR + ';"  class="tl-value" onclick="EMR.select.tlspanclick(this);"  ondblclick="EMR.select.tlspandblclick(this);" ' +
+                    ((json.FREEINPUT == 0) ? ' contenteditable="false" ' : ' contenteditable="true" ') +//是否允许自由输入
+                    '>' + show + '</span><span style="color:' +
+                    ((json.READONLY == 1) ? '#808080' : '#0000FF') +
+                    '" contenteditable="false" class="tl-right">]</span>';
+                return html;
+            }
+            dialog.oncancel = function () {
+                if (UE.plugins[thePlugins].editdom) {
+                    delete UE.plugins[thePlugins].editdom;
+                }
+            };
+            dialog.onok = function () {
+                if ($G('txtID').value == '') {
+                    alert('请输入控件ID');
+                    return false;
+                }
+                if ($G('txtNAME').value == '') {
+                    alert('请输入控件名称');
+                    return false;
+                }
+                var txtBINDINGDATA = $G('txtBINDINGDATA'),
+                    selectIndex = txtBINDINGDATA.selectedIndex,
+                    selectOptions = txtBINDINGDATA.options,
+                    selectValue = $G('txtDEFAULTVALUE').getAttribute('tl-value'),
+                    selectDesc='',
+                    selectData=[];
+                if (selectOptions != undefined && selectOptions.length > 0) {
+                    for (var i = 0, l = selectOptions.length; i < l; i++) {
+                        selectData.push({
+                            VALUE: selectOptions[i].value,
+                            TEXT: selectOptions[i].text,
+                            SELECTED: selectValue == selectOptions[i].value ? 1 : 0
+                        });
+                        if (selectValue == selectOptions[i].value)
+                            selectDesc = selectOptions[i].text;
+                    }
+                }
+                var json = {
+                    ID: $G('txtID').value,
+                    TYPE: 'select',
+                    NAME: $G('txtNAME').value,
+                    TAG: $G('txtTAG').value,
+                    DESCNAME: $G('txtDESCNAME').value,
+                    REQUIRED: 0,
+                    FREEINPUT: 0,
+                    COLOR: $G('txtCOLOR').value,
+                    VALUE: (selectValue == null || selectValue == '') ? '' : selectValue,
+                    TEXT: selectDesc,
+                    REMOTEURL: $G('txtREMOTEURL').value,//url
+                    BINDINGDATA: selectData//数据
+                };
+                if ($G('txtREQUIRED').checked) {
+                    json.REQUIRED = 1;
+                }
+                if ($G('txtFREEINPUT').checked) {
+                    json.FREEINPUT = 1;
+                }
+                var html = makeHtml(json);
+                if (!oNode) {
+                    try {
+                        oNode = createElement('span', json.ID);
+                        oNode.setAttribute('title', json.NAME);
+                        //oNode.setAttribute('onDOMSubtreeModified', "alert('DOMSubtreeModified')");//DOMSubtreeModified
+                        oNode.setAttribute('onclick', 'EMR.select.tlclick(this)');//点击同意出发某事件
+                        oNode.setAttribute('tl-model', JSON.stringify(json));
+                        //if (json.READONLY == 1) {
+                        //    oNode.setAttribute("contenteditable", "false");
+                        //}
+                        oNode.setAttribute("contenteditable", "false");
+                        oNode.setAttribute('class', 'defaultbackgroundcolor');
+                        oNode.innerHTML = html;//todo:具体需要实现
+                        oNode.onmousemove = function () { alert('onmousemove') };
+                        editor.execCommand('insertHtml', oNode.outerHTML);
+                    } catch (e) {
+                        try {
+                            editor.execCommand('error');
+                        } catch (e) {
+                            alert('控件异常，请联系管理员！');
+                        }
+                        return false;
+                    }
+                } else {
+                    oNode.setAttribute('tl-model', JSON.stringify(json));
+                    oNode.innerHTML = html;
+                    delete UE.plugins[thePlugins].editdom;
+                }
+            };
+        })(UE);
+    </script>
+</body>
+</html>

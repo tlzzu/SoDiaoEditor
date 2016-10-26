@@ -1,0 +1,9 @@
+﻿.defaultbackgroundcolor {background-color:#F0F8FF;}
+.defaultbackgroundcolor:hover {background-color:lightblue;}
+.tl-value {min-width:15px;padding:0 5px;}
+
+.tl-ui-select {position:absolute;display:none;border: 1px solid #ccc;min-height: 10px;background-color: #fefefe;overflow-y:auto;}
+.tl-ui-select-content{list-style: none;padding:0;font-size: 12px;margin:0;color:#666;}
+.tl-ui-select-content li{padding:0px 10px;overflow: hidden;word-break: break-all;line-height: 1.3;cursor: pointer;width:100%;}
+.tl-ui-select-content li:hover{background-color: #f2f2f2;}
+.tl-ui-select-content li.tl-ui-select-selecteitem,.ui-select-content li.tl-ui-select-selecteitem:hover{background-color: #2ea3d0;color:#fff;}
