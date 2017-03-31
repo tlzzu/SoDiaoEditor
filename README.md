@@ -1,35 +1,35 @@
 # SoDiaoEditor.v2
-> 查看更多请移步[博客园文章](http://note.youdao.com/)，阅读英文版请移步[这里](http://note.youdao.com/)
-## 预览
-1. [设计模式--电子病历设计器(扩展toolbar)](http://note.youdao.com/)
+> 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)
+## [预览](http://editor.sodiao.org/example/index.html)
+1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
 建议给病历模板设计者（开发人员，或者科主任）使用。
 可用来设计电子病历模板，也可以当做电子病历编辑器使用。
 此时输入的值可利用SDE对象暴露出的接口获取。
 ```
-2. [编辑模式--电子病历设计器](http://note.youdao.com/)
+2. [编辑模式--电子病历设计器](http://editor.sodiao.org/example/editor-design.html))
 ```
 建议给医生使用。
 此时医生可以在原有模板中添加已有的控件，也可以给科主任用来设计模板。
 亦可通过SDE对象暴露出来的接口获取数据。
 ```
-3. [只读模式--电子病历设计器](http://note.youdao.com/)
+3. [只读模式--电子病历设计器](http://editor.sodiao.org/example/readonly-design.html))
 ```
 建议该模式给医生查看使用，在该模式下电子病历中所有控件均不可编辑。
 ```
-4. [按钮控制--电子病历设计器](http://note.youdao.com/)
+4. [按钮控制--电子病历设计器](http://editor.sodiao.org/example/btn-design.html)
 ```
 按钮通过事件控制！
 ```
-5. [编辑模式--电子病历编辑器](http://note.youdao.com/)
+5. [编辑模式--电子病历编辑器](http://editor.sodiao.org/example/editor-editor.html)
 ```
 建议给医生使用，此模式下医生只能编辑控件中的值，其余均不可修改。
 ```
-6. [只读模式--电子病历编辑器](http://note.youdao.com/)
+6. [只读模式--电子病历编辑器](http://editor.sodiao.org/example/readonly-editor.html)
 ```
 该模式只允许查看，控件不可被编辑。
 ```
-7. [按钮控制--电子病历编辑器](http://note.youdao.com/)
+7. [按钮控制--电子病历编辑器](http://editor.sodiao.org/example/btn-editor.html)
 ```
 按钮通过事件控制！
 ```
@@ -55,7 +55,7 @@
 ```
 2. 设计器中新增SED对象，并增加以下接口：
 3. 修复事件兼容性（暂不支持IE8及其以下的浏览器，后续会有解决方案）
-4. 增加toolbar可配置性，参照[这里](http://note.youdao.com/)。
+4. 增加toolbar可配置性。
 5. 解决上一个版本中的bug。
 6. 等
 ## 结构
@@ -240,4 +240,4 @@ setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR
 1. 可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
 2. 可以在github中的Iss中提交；
 ## 打赏
-![image](http://images.cnblogs.com/cnblogs_com/tlzzu/899814/o_D210.tm.png)
+![image](data/img/ds.png)
