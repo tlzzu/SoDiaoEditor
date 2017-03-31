@@ -5,55 +5,54 @@
  * Time: 上午11:38
  * To change this template use File | Settings | File Templates.
  */
-var scrawl = function(options) {
+var scrawl = function (options) {
     options && this.initOptions(options);
 };
-(function() {
+(function () {
     var canvas = $G("J_brushBoard"),
         context = canvas.getContext('2d'),
         drawStep = [], //undo redo存储
         drawStepIndex = 0; //undo redo指针
 
     scrawl.prototype = {
-        isScrawl: false, //是否涂鸦
-        brushWidth: -1, //画笔粗细
-        brushColor: "", //画笔颜色
+        isScrawl:false, //是否涂鸦
+        brushWidth:-1, //画笔粗细
+        brushColor:"", //画笔颜色
 
-        initOptions: function(options) {
+        initOptions:function (options) {
             var me = this;
-            me.originalState(options); //初始页面状态
-            me._buildToolbarColor(options.colorList); //动态生成颜色选择集合
+            me.originalState(options);//初始页面状态
+            me._buildToolbarColor(options.colorList);//动态生成颜色选择集合
 
-            me._addBoardListener(options.saveNum); //添加画板处理
-            me._addOPerateListener(options.saveNum); //添加undo redo clearBoard处理
-            me._addColorBarListener(); //添加颜色选择处理
-            me._addBrushBarListener(); //添加画笔大小处理
-            me._addEraserBarListener(); //添加橡皮大小处理
-            me._addAddImgListener(); //添加增添背景图片处理
-            me._addRemoveImgListenter(); //删除背景图片处理
-            me._addScalePicListenter(); //添加缩放处理
-            me._addClearSelectionListenter(); //添加清楚选中状态处理
+            me._addBoardListener(options.saveNum);//添加画板处理
+            me._addOPerateListener(options.saveNum);//添加undo redo clearBoard处理
+            me._addColorBarListener();//添加颜色选择处理
+            me._addBrushBarListener();//添加画笔大小处理
+            me._addEraserBarListener();//添加橡皮大小处理
+            me._addAddImgListener();//添加增添背景图片处理
+            me._addRemoveImgListenter();//删除背景图片处理
+            me._addScalePicListenter();//添加缩放处理
+            me._addClearSelectionListenter();//添加清楚选中状态处理
 
-            me._originalColorSelect(options.drawBrushColor); //初始化颜色选中
-            me._originalBrushSelect(options.drawBrushSize); //初始化画笔选中
-            me._clearSelection(); //清楚选中状态
+            me._originalColorSelect(options.drawBrushColor);//初始化颜色选中
+            me._originalBrushSelect(options.drawBrushSize);//初始化画笔选中
+            me._clearSelection();//清楚选中状态
         },
 
-        originalState: function(options) {
+        originalState:function (options) {
             var me = this;
 
-            me.brushWidth = options.drawBrushSize; //同步画笔粗细
-            me.brushColor = options.drawBrushColor; //同步画笔颜色
+            me.brushWidth = options.drawBrushSize;//同步画笔粗细
+            me.brushColor = options.drawBrushColor;//同步画笔颜色
 
-            context.lineWidth = me.brushWidth; //初始画笔大小
-            context.strokeStyle = me.brushColor; //初始画笔颜色
-            context.fillStyle = "transparent"; //初始画布背景颜色
-            context.lineCap = "round"; //去除锯齿
+            context.lineWidth = me.brushWidth;//初始画笔大小
+            context.strokeStyle = me.brushColor;//初始画笔颜色
+            context.fillStyle = "transparent";//初始画布背景颜色
+            context.lineCap = "round";//去除锯齿
             context.fill();
         },
-        _buildToolbarColor: function(colorList) {
-            var tmp = null,
-                arr = [];
+        _buildToolbarColor:function (colorList) {
+            var tmp = null, arr = [];
             arr.push("<table id='J_colorList'>");
             for (var i = 0, color; color = colorList[i++];) {
                 if ((i - 1) % 5 == 0) {
@@ -69,7 +68,7 @@ var scrawl = function(options) {
             $G("J_colorBar").innerHTML = arr.join("");
         },
 
-        _addBoardListener: function(saveNum) {
+        _addBoardListener:function (saveNum) {
             var me = this,
                 margin = 0,
                 startX = -1,
@@ -77,14 +76,13 @@ var scrawl = function(options) {
                 isMouseDown = false,
                 isMouseMove = false,
                 isMouseUp = false,
-                buttonPress = 0,
-                button, flag = '';
+                buttonPress = 0, button, flag = '';
 
             margin = parseInt(domUtils.getComputedStyle($G("J_wrap"), "margin-left"));
             drawStep.push(context.getImageData(0, 0, context.canvas.width, context.canvas.height));
             drawStepIndex += 1;
 
-            domUtils.on(canvas, ["mousedown", "mousemove", "mouseup", "mouseout"], function(e) {
+            domUtils.on(canvas, ["mousedown", "mousemove", "mouseup", "mouseout"], function (e) {
                 button = browser.webkit ? e.which : buttonPress;
                 switch (e.type) {
                     case 'mousedown':
@@ -94,16 +92,16 @@ var scrawl = function(options) {
                         isMouseUp = false;
                         isMouseMove = false;
                         me.isScrawl = true;
-                        startX = e.clientX - margin; //10为外边距总和
+                        startX = e.clientX - margin;//10为外边距总和
                         startY = e.clientY - margin;
                         context.beginPath();
                         break;
-                    case 'mousemove':
+                    case 'mousemove' :
                         if (!flag && button == 0) {
                             return;
                         }
                         if (!flag && button) {
-                            startX = e.clientX - margin; //10为外边距总和
+                            startX = e.clientX - margin;//10为外边距总和
                             startY = e.clientY - margin;
                             context.beginPath();
                             flag = 1;
@@ -123,7 +121,7 @@ var scrawl = function(options) {
                         break;
                     case 'mouseup':
                         buttonPress = 0;
-                        if (!isMouseDown) return;
+                        if (!isMouseDown)return;
                         if (!isMouseMove) {
                             context.arc(startX, startY, context.lineWidth, 0, Math.PI * 2, false);
                             context.fillStyle = context.strokeStyle;
@@ -146,9 +144,9 @@ var scrawl = function(options) {
                 }
             });
         },
-        _addOPerateListener: function(saveNum) {
+        _addOPerateListener:function (saveNum) {
             var me = this;
-            domUtils.on($G("J_previousStep"), "click", function() {
+            domUtils.on($G("J_previousStep"), "click", function () {
                 if (drawStepIndex > 1) {
                     drawStepIndex -= 1;
                     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -157,7 +155,7 @@ var scrawl = function(options) {
                     drawStepIndex == 1 && me.btn2disable("J_previousStep");
                 }
             });
-            domUtils.on($G("J_nextStep"), "click", function() {
+            domUtils.on($G("J_nextStep"), "click", function () {
                 if (drawStepIndex > 0 && drawStepIndex < drawStep.length) {
                     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                     context.putImageData(drawStep[drawStepIndex], 0, 0);
@@ -166,7 +164,7 @@ var scrawl = function(options) {
                     drawStepIndex == drawStep.length && me.btn2disable("J_nextStep");
                 }
             });
-            domUtils.on($G("J_clearBoard"), "click", function() {
+            domUtils.on($G("J_clearBoard"), "click", function () {
                 context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                 drawStep = [];
                 me._saveOPerate(saveNum);
@@ -177,9 +175,9 @@ var scrawl = function(options) {
                 me.btn2disable("J_clearBoard");
             });
         },
-        _addColorBarListener: function() {
+        _addColorBarListener:function () {
             var me = this;
-            domUtils.on($G("J_colorBar"), "click", function(e) {
+            domUtils.on($G("J_colorBar"), "click", function (e) {
                 var target = me.getTarget(e),
                     color = target.title;
                 if (!!color) {
@@ -192,9 +190,9 @@ var scrawl = function(options) {
                 }
             });
         },
-        _addBrushBarListener: function() {
+        _addBrushBarListener:function () {
             var me = this;
-            domUtils.on($G("J_brushBar"), "click", function(e) {
+            domUtils.on($G("J_brushBar"), "click", function (e) {
                 var target = me.getTarget(e),
                     size = browser.ie ? target.innerText : target.text;
                 if (!!size) {
@@ -207,9 +205,9 @@ var scrawl = function(options) {
                 }
             });
         },
-        _addEraserBarListener: function() {
+        _addEraserBarListener:function () {
             var me = this;
-            domUtils.on($G("J_eraserBar"), "click", function(e) {
+            domUtils.on($G("J_eraserBar"), "click", function (e) {
                 var target = me.getTarget(e),
                     size = browser.ie ? target.innerText : target.text;
                 if (!!size) {
@@ -221,20 +219,20 @@ var scrawl = function(options) {
                 }
             });
         },
-        _addAddImgListener: function() {
+        _addAddImgListener:function () {
             var file = $G("J_imgTxt");
             if (!window.FileReader) {
                 $G("J_addImg").style.display = 'none';
                 $G("J_removeImg").style.display = 'none';
                 $G("J_sacleBoard").style.display = 'none';
             }
-            domUtils.on(file, "change", function(e) {
+            domUtils.on(file, "change", function (e) {
                 var frm = file.parentNode;
                 addMaskLayer(lang.backgroundUploading);
 
                 var target = e.target || e.srcElement,
                     reader = new FileReader();
-                reader.onload = function(evt) {
+                reader.onload = function(evt){
                     var target = evt.target || evt.srcElement;
                     ue_callback(target.result, 'SUCCESS');
                 };
@@ -242,23 +240,23 @@ var scrawl = function(options) {
                 frm.reset();
             });
         },
-        _addRemoveImgListenter: function() {
+        _addRemoveImgListenter:function () {
             var me = this;
-            domUtils.on($G("J_removeImg"), "click", function() {
+            domUtils.on($G("J_removeImg"), "click", function () {
                 $G("J_picBoard").innerHTML = "";
                 me.btn2disable("J_removeImg");
                 me.btn2disable("J_sacleBoard");
             });
         },
-        _addScalePicListenter: function() {
-            domUtils.on($G("J_sacleBoard"), "click", function() {
+        _addScalePicListenter:function () {
+            domUtils.on($G("J_sacleBoard"), "click", function () {
                 var picBoard = $G("J_picBoard"),
                     scaleCon = $G("J_scaleCon"),
                     img = picBoard.children[0];
 
                 if (img) {
                     if (!scaleCon) {
-                        picBoard.style.cssText = "position:relative;z-index:999;" + picBoard.style.cssText;
+                        picBoard.style.cssText = "position:relative;z-index:999;"+picBoard.style.cssText;
                         img.style.cssText = "position: absolute;top:" + (canvas.height - img.height) / 2 + "px;left:" + (canvas.width - img.width) / 2 + "px;";
                         var scale = new ScaleBoy();
                         picBoard.appendChild(scale.init());
@@ -276,26 +274,26 @@ var scrawl = function(options) {
                 }
             });
         },
-        _addClearSelectionListenter: function() {
+        _addClearSelectionListenter:function () {
             var doc = document;
-            domUtils.on(doc, 'mousemove', function(e) {
+            domUtils.on(doc, 'mousemove', function (e) {
                 if (browser.ie && browser.version < 11)
                     doc.selection.clear();
                 else
                     window.getSelection().removeAllRanges();
             });
         },
-        _clearSelection: function() {
+        _clearSelection:function () {
             var list = ["J_operateBar", "J_colorBar", "J_brushBar", "J_eraserBar", "J_picBoard"];
             for (var i = 0, group; group = list[i++];) {
                 domUtils.unSelectable($G(group));
             }
         },
 
-        _saveOPerate: function(saveNum) {
+        _saveOPerate:function (saveNum) {
             var me = this;
             if (drawStep.length <= saveNum) {
-                if (drawStepIndex < drawStep.length) {
+                if(drawStepIndex<drawStep.length){
                     me.btn2disable("J_nextStep");
                     drawStep.splice(drawStepIndex);
                 }
@@ -310,7 +308,7 @@ var scrawl = function(options) {
             me.btn2Highlight("J_clearBoard");
         },
 
-        _originalColorSelect: function(title) {
+        _originalColorSelect:function (title) {
             var colorList = $G("J_colorList").getElementsByTagName("td");
             for (var j = 0, cell; cell = colorList[j++];) {
                 if (cell.children[0].title.toLowerCase() == title) {
@@ -318,7 +316,7 @@ var scrawl = function(options) {
                 }
             }
         },
-        _originalBrushSelect: function(text) {
+        _originalBrushSelect:function (text) {
             var brushList = $G("J_brushBar").children;
             for (var i = 0, ele; ele = brushList[i++];) {
                 if (ele.tagName.toLowerCase() == "a") {
@@ -329,7 +327,7 @@ var scrawl = function(options) {
                 }
             }
         },
-        _addColorSelect: function(target) {
+        _addColorSelect:function (target) {
             var me = this,
                 colorList = $G("J_colorList").getElementsByTagName("td"),
                 eraserList = $G("J_eraserBar").children,
@@ -356,7 +354,7 @@ var scrawl = function(options) {
             target.style.opacity = 1;
             target.blur();
         },
-        _addBESelect: function(target) {
+        _addBESelect:function (target) {
             var brushList = $G("J_brushBar").children;
             var eraserList = $G("J_eraserBar").children;
 
@@ -374,7 +372,7 @@ var scrawl = function(options) {
             target.style.opacity = 1;
             target.blur();
         },
-        getCanvasData: function() {
+        getCanvasData:function () {
             var picContainer = $G("J_picBoard"),
                 img = picContainer.children[0];
             if (img) {
@@ -390,7 +388,7 @@ var scrawl = function(options) {
                 context.drawImage(img, x, y, img.width, img.height);
             } else {
                 context.globalCompositeOperation = "destination-atop";
-                context.fillStyle = "#fff"; //重置画布背景白色
+                context.fillStyle = "#fff";//重置画布背景白色
                 context.fillRect(0, 0, canvas.width, canvas.height);
             }
             try {
@@ -399,37 +397,37 @@ var scrawl = function(options) {
                 return "";
             }
         },
-        btn2Highlight: function(id) {
+        btn2Highlight:function (id) {
             var cur = $G(id);
             cur.className.indexOf("H") == -1 && (cur.className += "H");
         },
-        btn2disable: function(id) {
+        btn2disable:function (id) {
             var cur = $G(id);
             cur.className.indexOf("H") != -1 && (cur.className = cur.className.replace("H", ""));
         },
-        getTarget: function(evt) {
+        getTarget:function (evt) {
             return evt.target || evt.srcElement;
         }
     };
 })();
 
-var ScaleBoy = function() {
+var ScaleBoy = function () {
     this.dom = null;
     this.scalingElement = null;
 };
-(function() {
+(function () {
     function _appendStyle() {
         var doc = document,
             head = doc.getElementsByTagName('head')[0],
             style = doc.createElement('style'),
-            cssText = '.scale{visibility:hidden;cursor:move;position:absolute;left:0;top:0;width:100px;height:50px;background-color:#fff;font-size:0;line-height:0;opacity:.4;filter:Alpha(opacity=40);}' +
-            '.scale span{position:absolute;left:0;top:0;width:6px;height:6px;background-color:#006DAE;}' +
-            '.scale .hand0, .scale .hand7{cursor:nw-resize;}' +
-            '.scale .hand1, .scale .hand6{left:50%;margin-left:-3px;cursor:n-resize;}' +
-            '.scale .hand2, .scale .hand4, .scale .hand7{left:100%;margin-left:-6px;}' +
-            '.scale .hand3, .scale .hand4{top:50%;margin-top:-3px;cursor:w-resize;}' +
-            '.scale .hand5, .scale .hand6, .scale .hand7{margin-top:-6px;top:100%;}' +
-            '.scale .hand2, .scale .hand5{cursor:ne-resize;}';
+            cssText = '.scale{visibility:hidden;cursor:move;position:absolute;left:0;top:0;width:100px;height:50px;background-color:#fff;font-size:0;line-height:0;opacity:.4;filter:Alpha(opacity=40);}'
+                + '.scale span{position:absolute;left:0;top:0;width:6px;height:6px;background-color:#006DAE;}'
+                + '.scale .hand0, .scale .hand7{cursor:nw-resize;}'
+                + '.scale .hand1, .scale .hand6{left:50%;margin-left:-3px;cursor:n-resize;}'
+                + '.scale .hand2, .scale .hand4, .scale .hand7{left:100%;margin-left:-6px;}'
+                + '.scale .hand3, .scale .hand4{top:50%;margin-top:-3px;cursor:w-resize;}'
+                + '.scale .hand5, .scale .hand6, .scale .hand7{margin-top:-6px;top:100%;}'
+                + '.scale .hand2, .scale .hand5{cursor:ne-resize;}';
         style.type = 'text/css';
 
         try {
@@ -467,26 +465,26 @@ var ScaleBoy = function() {
         [0, 0, 1, 1]
     ];
     ScaleBoy.prototype = {
-        init: function() {
+        init:function () {
             _appendStyle();
             var me = this,
                 scale = me.dom = _getDom();
 
             me.scaleMousemove.fp = me;
-            domUtils.on(scale, 'mousedown', function(e) {
+            domUtils.on(scale, 'mousedown', function (e) {
                 var target = e.target || e.srcElement;
-                me.start = { x: e.clientX, y: e.clientY };
+                me.start = {x:e.clientX, y:e.clientY};
                 if (target.className.indexOf('hand') != -1) {
                     me.dir = target.className.replace('hand', '');
                 }
                 domUtils.on(document.body, 'mousemove', me.scaleMousemove);
                 e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
             });
-            domUtils.on(document.body, 'mouseup', function(e) {
+            domUtils.on(document.body, 'mouseup', function (e) {
                 if (me.start) {
                     domUtils.un(document.body, 'mousemove', me.scaleMousemove);
                     if (me.moved) {
-                        me.updateScaledElement({ position: { x: scale.style.left, y: scale.style.top }, size: { w: scale.style.width, h: scale.style.height } });
+                        me.updateScaledElement({position:{x:scale.style.left, y:scale.style.top}, size:{w:scale.style.width, h:scale.style.height}});
                     }
                     delete me.start;
                     delete me.moved;
@@ -495,14 +493,13 @@ var ScaleBoy = function() {
             });
             return scale;
         },
-        startScale: function(objElement) {
-            var me = this,
-                Idom = me.dom;
+        startScale:function (objElement) {
+            var me = this, Idom = me.dom;
 
             Idom.style.cssText = 'visibility:visible;top:' + objElement.style.top + ';left:' + objElement.style.left + ';width:' + objElement.offsetWidth + 'px;height:' + objElement.offsetHeight + 'px;';
             me.scalingElement = objElement;
         },
-        updateScaledElement: function(objStyle) {
+        updateScaledElement:function (objStyle) {
             var cur = this.scalingElement,
                 pos = objStyle.position,
                 size = objStyle.size;
@@ -515,10 +512,9 @@ var ScaleBoy = function() {
                 size.h && (cur.style.height = size.h);
             }
         },
-        updateStyleByDir: function(dir, offset) {
+        updateStyleByDir:function (dir, offset) {
             var me = this,
-                dom = me.dom,
-                tmp;
+                dom = me.dom, tmp;
 
             rect['def'] = [1, 1, 0, 0];
             if (rect[dir][0] != 0) {
@@ -538,20 +534,20 @@ var ScaleBoy = function() {
                 dom.style.height = me._validScaledProp('height', tmp) + 'px';
             }
             if (dir === 'def') {
-                me.updateScaledElement({ position: { x: dom.style.left, y: dom.style.top } });
+                me.updateScaledElement({position:{x:dom.style.left, y:dom.style.top}});
             }
         },
-        scaleMousemove: function(e) {
+        scaleMousemove:function (e) {
             var me = arguments.callee.fp,
                 start = me.start,
                 dir = me.dir || 'def',
-                offset = { x: e.clientX - start.x, y: e.clientY - start.y };
+                offset = {x:e.clientX - start.x, y:e.clientY - start.y};
 
             me.updateStyleByDir(dir, offset);
-            arguments.callee.fp.start = { x: e.clientX, y: e.clientY };
+            arguments.callee.fp.start = {x:e.clientX, y:e.clientY};
             arguments.callee.fp.moved = 1;
         },
-        _validScaledProp: function(prop, value) {
+        _validScaledProp:function (prop, value) {
             var ele = this.dom,
                 wrap = $G("J_picBoard");
 
@@ -578,10 +574,7 @@ function ue_callback(url, state) {
 
     //图片缩放
     function scale(img, max, oWidth, oHeight) {
-        var width = 0,
-            height = 0,
-            percent, ow = img.width || oWidth,
-            oh = img.height || oHeight;
+        var width = 0, height = 0, percent, ow = img.width || oWidth, oh = img.height || oHeight;
         if (ow > max || oh > max) {
             if (ow >= oh) {
                 if (width = ow - max) {
@@ -604,7 +597,7 @@ function ue_callback(url, state) {
     //状态响应
     if (state == "SUCCESS") {
         picBorard.innerHTML = "";
-        img.onload = function() {
+        img.onload = function () {
             scale(this, 300);
             picBorard.appendChild(img);
 
@@ -637,18 +630,10 @@ function exec(scrawlObj) {
     if (scrawlObj.isScrawl) {
         addMaskLayer(lang.scrawlUpLoading);
         var base64 = scrawlObj.getCanvasData();
-        var img = document.createElement('img');
-        img.setAttribute('src', 'data:image/png;base64,' + base64);
-        editor.execCommand('insertHtml', img.outerHTML, true);
-        dialog.close();
-        return;
-
-
-
         if (!!base64) {
             var options = {
-                timeout: 100000,
-                onsuccess: function(xhr) {
+                timeout:100000,
+                onsuccess:function (xhr) {
                     if (!scrawlObj.isCancelScrawl) {
                         var responseObj;
                         responseObj = eval("(" + xhr.responseText + ")");
@@ -667,7 +652,7 @@ function exec(scrawlObj) {
 
                     }
                 },
-                onerror: function() {
+                onerror:function () {
                     alert(lang.imageError);
                     dialog.close();
                 }
@@ -676,10 +661,11 @@ function exec(scrawlObj) {
 
             var actionUrl = editor.getActionUrl(editor.getOpt('scrawlActionName')),
                 params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
-                url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?' : '&') + params);
+                url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?':'&') + params);
             ajax.request(url, options);
         }
     } else {
         addMaskLayer(lang.noScarwl + "&nbsp;&nbsp;&nbsp;<input type='button' value='" + lang.continueBtn + "'  onclick='removeMaskLayer()'/>");
     }
 }
+
