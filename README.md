@@ -1,5 +1,9 @@
 # SoDiaoEditor.v2
 > 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)
+## [更新记录]
+#### 编辑器支持设计模式（2017-4-21 ）
+```
+订单
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
@@ -21,15 +25,19 @@
 ```
 按钮通过事件控制！
 ```
-5. [编辑模式--电子病历编辑器](http://editor.sodiao.org/example/editor-editor.html)
+5. [设计模式--电子病历编辑器](http://editor.sodiao.org/example/design-editor.html)
+```
+建议给医生使用，此模式下医生可以编辑控件中的值，并且可编译控件的内容。选中文字后有惊喜。
+```
+6. [编辑模式--电子病历编辑器](http://editor.sodiao.org/example/editor-editor.html)
 ```
 建议给医生使用，此模式下医生只能编辑控件中的值，其余均不可修改。
 ```
-6. [只读模式--电子病历编辑器](http://editor.sodiao.org/example/readonly-editor.html)
+7. [只读模式--电子病历编辑器](http://editor.sodiao.org/example/readonly-editor.html)
 ```
 该模式只允许查看，控件不可被编辑。
 ```
-7. [按钮控制--电子病历编辑器](http://editor.sodiao.org/example/btn-editor.html)
+8. [按钮控制--电子病历编辑器](http://editor.sodiao.org/example/btn-editor.html)
 ```
 按钮通过事件控制！
 ```
@@ -233,6 +241,7 @@ setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR
 ##### 电子病历编辑器：
 方法 | 说明 | 描述
 ---|---|---
+html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传递，则为获取，有值则为设置
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
