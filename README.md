@@ -3,7 +3,8 @@
 ## [更新记录]
 #### 编辑器支持设计模式（2017-4-21 ）
 ```
-订单
+可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
+```
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
