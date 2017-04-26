@@ -76,6 +76,7 @@
 ```shell
 data                    模拟异步请求的数据，正式项目中可忽略
 dialogs                 扩展百度ueditor的dialogs
+lang                 	toolbar多语言支持，可自定义toolbar标题
 dist                    核心js文件
     js
         sde.design.js   SoDiaoEditor设计器核心js
