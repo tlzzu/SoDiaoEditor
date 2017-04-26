@@ -1,16 +1,12 @@
 # SoDiaoEditor.v2
-> 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)
-## [更新记录]
-#### 编辑器支持设计模式（2017-4-21 ）
-```
-可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
-```
+> 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)。很欣慰，该项目已经至少在2所三甲医院得到了应用，愿医疗行业越来越好，谨以此献给那些还在医疗行业奋斗的小伙伴。
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
 建议给病历模板设计者（开发人员，或者科主任）使用。
 可用来设计电子病历模板，也可以当做电子病历编辑器使用。
 此时输入的值可利用SDE对象暴露出的接口获取。
+增加自定义toolbar标题功能，可支持多语言。
 ```
 2. [编辑模式--电子病历设计器](http://editor.sodiao.org/example/editor-design.html))
 ```
@@ -67,6 +63,15 @@
 4. 增加toolbar可配置性。
 5. 解决上一个版本中的bug。
 6. 等
+#### 编辑器支持设计模式（2017-4-21 ）
+```
+可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
+```
+#### 增加自定义toolbar标题&支持对字体的操作（2017-4-26 ）
+```
+1. 增加了对自定义toolbar标题的支持，支持多语言，参考[设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)，只需在html中引用/lang/sde-zh-cn.js文件即可，可以更改文件中显示的内容值，达到自定义toolbar标题的功能
+2. 原来对控件字体格式化时会损坏控件，现该bug已经修复。
+```
 ## 结构
 ```shell
 data                    模拟异步请求的数据，正式项目中可忽略
