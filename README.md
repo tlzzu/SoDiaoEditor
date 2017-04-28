@@ -249,6 +249,18 @@ html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传�
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
+##### toolbar完整配置项
+```
+toolbars: {
+    'sde-toolbar-file': 'file',//文件
+    'sde-toolbar-editor': ['history', 'clipboard', 'fonts', 'paragraphs', 'styles'],//编辑
+    'sde-toolbar-insert': ['horizontal', 'spechars', 'link', 'img', 'map', 'code', 'table', 'formula', 'comment'],//插入
+    'sde-toolbar-tables': ['table', 'blockmergecells', 'alignmergecells'],//表格
+    'sde-toolbar-views': ['directory', 'showcomment', 'preview'],//视图
+    'sde-toolbar-tools': ['drafts', 'print', 'searchreplace', 'wordcount'],//工具
+    'sde-toolbar-records': ['sdetemplate', 'sdecontrols']//病历控件
+}
+```
 ##### 电子病历编辑器：
 方法 | 说明 | 描述
 ---|---|---
