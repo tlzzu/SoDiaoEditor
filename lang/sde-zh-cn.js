@@ -111,8 +111,8 @@
                 'wordcount': '字数统计'
             },
             'sde-toolbar-records': {
-                'sde-toolbar-records': '病历',
-                'sdetemplate': '控件库',
+                'sde-toolbar-records': '病历233',
+                'sdetemplate': '控件库1',
                 'controls': '新增控件',
                 'sdecontroltext': '文本输入框',
                 'sdecontrolselect': '下拉选项框'
