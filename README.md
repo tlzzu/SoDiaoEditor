@@ -34,6 +34,10 @@
 1. 增加了对自定义toolbar标题的支持，支持多语言，参考[设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)，只需在html中引用/lang/sde-zh-cn.js文件即可，可以更改文件中显示的内容值，达到自定义toolbar标题的功能
 2. 原来对控件字体格式化时会损坏控件，现该bug已经修复。
 ```
+#### 增加表格中的对齐方向（2017-4-28）
+```
+表格中字体的对齐方向可在 表格-》对齐方向 中设置
+```
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
