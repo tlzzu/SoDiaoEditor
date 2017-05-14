@@ -38,6 +38,11 @@
 ```
 表格中字体的对齐方向可在 表格-》对齐方向 中设置
 ```
+#### 增加日期控件、复选框控件（2017-5-14）
+```
+1. 增加日期控件。可以设置最大、最小范围。
+2. 增加复选框控件。
+```
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```

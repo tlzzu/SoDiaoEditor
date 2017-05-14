@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>文本输入框框</title>
+    <title>文本输入框</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -96,6 +96,7 @@
                     $G('txtID').value = json.ID;
                     $G('txtNAME').value = json.NAME;
                     $G('txtCOLOR').value = json.COLOR;
+                    $G('txtCOLOR').style.backgroundColor = "#" + json.COLOR;
                     $G('txtTAG').value = json.TAG;
                     $G('txtVALUE').value = json.VALUE;
                     $G('txtDESCNAME').value = json.DESCNAME;
@@ -171,9 +172,7 @@
                         oNode.setAttribute("contenteditable", "false");
                         oNode.setAttribute('class', 'sde-bg');
                         oNode.innerHTML = html; //todo:具体需要实现
-                        oNode.onmousemove = function() {
-                            alert('onmousemove')
-                        };
+
                         editor.execCommand('insertHtml', oNode.outerHTML);
                     } catch (e) {
                         try {

@@ -92,7 +92,14 @@
                 'insertrow': '插入行',
                 'insertcol': '插入列',
                 'deleterow': '删除行',
-                'deletecol': '删除列'
+                'deletecol': '删除列',
+                'alignmerge': '对齐方向',
+                'valign-top': '顶端对齐',
+                'valign-middle': '垂直居中',
+                'valign-bottom': '底端对齐',
+                'align-left': '左对齐',
+                'align-center': '居中',
+                'align-right': '右对齐'
             },
             'sde-toolbar-views': {
                 'sde-toolbar-views': '视图',
@@ -111,11 +118,13 @@
                 'wordcount': '字数统计'
             },
             'sde-toolbar-records': {
-                'sde-toolbar-records': '病历233',
-                'sdetemplate': '控件库1',
+                'sde-toolbar-records': '病历',
+                'sdetemplate': '控件库',
                 'controls': '新增控件',
-                'sdecontroltext': '文本输入框',
-                'sdecontrolselect': '下拉选项框'
+                'sdecontroltext': '单行文本',
+                'sdecontrolselect': '下拉列表',
+                'sdecontroldate': '日期输入',
+                'sdecontrolcbx': '复选框'
             }
         }
     };
