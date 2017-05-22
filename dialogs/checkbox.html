@@ -47,8 +47,15 @@
         #cbxs li:hover a {
             display: inline;
         }
+        
+        .alert ol {
+            list-style-type: demical;
+        }
+        
+        .alert ol li {
+            list-style-position: outside;
+        }
     </style>
-
 </head>
 
 <body>
@@ -111,14 +118,20 @@
                                     </div>
                                     <div class="btn-group pull-right">
                                         <a title="添加" class="btn btn-primary" onclick="add()" href="#"><i class="icon-white icon-plus"></i></a>
-
-
-
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab2">
                                 <input type="text" placeholder="支持get请求的完整url地址（http://）" style="width:90%;" id="txtREMOTEURL" />
+                                <div class="alert alert-info">
+                                    <h4>提示：</h4>
+                                    <ol>
+                                        <li>如url中的值不为空此时不关注固定选项中有没有值，优先取地址中的值；</li>
+                                        <li>地址中的json格式如下：<br> [{VALUE:'',TEXT:'',CHECKED:0/1}]
+                                            <br> CHECKED=0未选中，SELECTED=1已选中
+                                        </li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>

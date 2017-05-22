@@ -17,6 +17,15 @@
     <script src="jscolor-2.0.4/jscolor.min.js"></script>
     <script src="js/jQuery.v3.1.2-pre.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .alert ol {
+            list-style-type: demical;
+        }
+        
+        .alert ol li {
+            list-style-position: outside;
+        }
+    </style>
 </head>
 
 <body>
@@ -117,6 +126,13 @@
                             </div>
                             <div class="tab-pane" id="tab2">
                                 <input type="text" placeholder="支持get请求的完整url地址（http://）" style="width:90%;" id="txtREMOTEURL" />
+                                <div class="alert alert-info">
+                                    <h4>提示：</h4>
+                                    <ol>
+                                        <li>如url中的值不为空此时不关注固定选项中有没有值，优先取地址中的值；</li>
+                                        <li>地址中的json格式如下：<br>[{VALUE:'',TEXT:'',SELECTED:0/1}]<br>其中SELECTED=0未选中，SELECTED=1已选中</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
