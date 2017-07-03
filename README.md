@@ -43,6 +43,10 @@
 1. 增加日期控件。可以设置最大、最小范围。
 2. 增加复选框控件。
 ```
+#### 编辑器增加移动化支持（2017-7-3）
+```
+1. 对编辑器中的控件增加移动化支持，对移动设备访问编辑，无需配置，自动启用移动化适配。[可在移动端访问此页面](http://editor.sodiao.org/example/design-editor.html)
+```
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
