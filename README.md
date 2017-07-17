@@ -25,28 +25,37 @@
 4. 增加toolbar可配置性。
 5. 解决上一个版本中的bug。
 6. 等
-#### 编辑器支持设计模式（2017-4-21）
+
+#### 编辑器增加移动化支持（2017-7-17）
 ```
-可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
+1. 在设计器中对涂鸦双向编辑，可对之前的涂鸦进行二次修改。[可在移动端访问此页面](http://editor.sodiao.org/example/design-design.html)
 ```
-#### 增加自定义toolbar标题&支持对字体的操作（2017-4-26）
+#### 编辑器增加移动化支持（2017-7-3）
 ```
-1. 增加了对自定义toolbar标题的支持，支持多语言，参考[设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)，只需在html中引用/lang/sde-zh-cn.js文件即可，可以更改文件中显示的内容值，达到自定义toolbar标题的功能
-2. 原来对控件字体格式化时会损坏控件，现该bug已经修复。
-```
-#### 增加表格中的对齐方向（2017-4-28）
-```
-表格中字体的对齐方向可在 表格-》对齐方向 中设置
+1. 对编辑器中的控件增加移动化支持，对移动设备访问编辑，无需配置，自动启用移动化适配。[可在移动端访问此页面](http://editor.sodiao.org/example/design-editor.html)
 ```
 #### 增加日期控件、复选框控件（2017-5-14）
 ```
 1. 增加日期控件。可以设置最大、最小范围。
 2. 增加复选框控件。
 ```
-#### 编辑器增加移动化支持（2017-7-3）
+#### 增加表格中的对齐方向（2017-4-28）
 ```
-1. 对编辑器中的控件增加移动化支持，对移动设备访问编辑，无需配置，自动启用移动化适配。[可在移动端访问此页面](http://editor.sodiao.org/example/design-editor.html)
+表格中字体的对齐方向可在 表格-》对齐方向 中设置
 ```
+#### 增加自定义toolbar标题&支持对字体的操作（2017-4-26）
+```
+1. 增加了对自定义toolbar标题的支持，支持多语言，参考[设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)，只需在html中引用/lang/sde-zh-cn.js文件即可，可以更改文件中显示的内容值，达到自定义toolbar标题的功能
+2. 原来对控件字体格式化时会损坏控件，现该bug已经修复。
+```
+#### 编辑器支持设计模式（2017-4-21）
+```
+可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
+```
+## 展示
+![ ](example/img/1.gif)
+![ ](example/img/2.gif)
+![ ](example/img/3.gif)
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```

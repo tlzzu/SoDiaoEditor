@@ -8,6 +8,8 @@
 var scrawl = function(options) {
     options && this.initOptions(options);
 };
+//是否按照原图片大小
+var isSourceImgSize = false;
 (function() {
     var canvas = $G("J_brushBoard"),
         context = canvas.getContext('2d'),
@@ -16,11 +18,14 @@ var scrawl = function(options) {
 
     scrawl.prototype = {
         isScrawl: false, //是否涂鸦
+        isEdit: false, //默认不是编辑
         brushWidth: -1, //画笔粗细
+        opt: null,
         brushColor: "", //画笔颜色
 
         initOptions: function(options) {
             var me = this;
+            this.opt = options;
             me.originalState(options); //初始页面状态
             me._buildToolbarColor(options.colorList); //动态生成颜色选择集合
 
@@ -228,15 +233,22 @@ var scrawl = function(options) {
                 $G("J_removeImg").style.display = 'none';
                 $G("J_sacleBoard").style.display = 'none';
             }
+            var me = this;
             domUtils.on(file, "change", function(e) {
                 var frm = file.parentNode;
-                addMaskLayer(lang.backgroundUploading);
-
+                addMaskLayer("背景图片上传中,别急哦~");
+                // debugger;
                 var target = e.target || e.srcElement,
                     reader = new FileReader();
                 reader.onload = function(evt) {
                     var target = evt.target || evt.srcElement;
-                    ue_callback(target.result, 'SUCCESS');
+
+                    if (confirm("是否按照当前图片大小重设画板大小？")) {
+                        isSourceImgSize = true;
+                        ue_callback(target.result, 'SUCCESS');
+                    } else {
+                        ue_callback(target.result, 'SUCCESS');
+                    }
                 };
                 reader.readAsDataURL(target.files[0]);
                 frm.reset();
@@ -330,6 +342,7 @@ var scrawl = function(options) {
             }
         },
         _addColorSelect: function(target) {
+
             var me = this,
                 colorList = $G("J_colorList").getElementsByTagName("td"),
                 eraserList = $G("J_eraserBar").children,
@@ -373,6 +386,18 @@ var scrawl = function(options) {
 
             target.style.opacity = 1;
             target.blur();
+        },
+        //讲base64编码的data 赋予画板
+        setCanvasData: function(base64Data) {
+            var img
+            if (typeof base64Data === "string") {
+                img = document.createElement("img");
+                img.src = base64Data;
+            } else img = base64Data;
+            ue_callback(img.src, 'SUCCESS');
+            this.isScrawl = true;
+            this.isEdit = true;
+            //context.drawImage(img, 0, 0, img.width, img.height);
         },
         getCanvasData: function() {
             var picContainer = $G("J_picBoard"),
@@ -605,7 +630,20 @@ function ue_callback(url, state) {
     if (state == "SUCCESS") {
         picBorard.innerHTML = "";
         img.onload = function() {
-            scale(this, 300);
+            //debugger;
+            var w = 598;
+            if (img.width < 598) {
+                w = img.width;
+            }
+            if (isSourceImgSize) {
+                var J_brushBoard = document.getElementById('J_brushBoard'),
+                    J_picBoard = document.getElementById('J_picBoard');
+                J_brushBoard.width = img.width;
+                J_brushBoard.height = img.height;
+                J_picBoard.style.width = img.width + 'px';
+                J_picBoard.style.height = img.height + 'px';
+            }
+            scale(this, w);
             picBorard.appendChild(img);
 
             var obj = new scrawl();
@@ -635,11 +673,17 @@ function addMaskLayer(html) {
 //执行确认按钮方法
 function exec(scrawlObj) {
     if (scrawlObj.isScrawl) {
-        addMaskLayer(lang.scrawlUpLoading);
+        addMaskLayer("涂鸦上传中,别急哦~");
         var base64 = scrawlObj.getCanvasData();
-        var img = document.createElement('img');
-        img.setAttribute('src', 'data:image/png;base64,' + base64);
-        editor.execCommand('insertHtml', img.outerHTML, true);
+        if (scrawlObj.isEdit) {
+            UE.plugins["sdescrawl"].editdom.src = 'data:image/png;base64,' + base64;
+            delete UE.plugins['sdescrawl'].editdom;
+        } else {
+            var img = document.createElement('img');
+            img.setAttribute('src', 'data:image/png;base64,' + base64);
+            img.setAttribute("scrawl", true);
+            editor.execCommand('insertHtml', img.outerHTML, true);
+        }
         dialog.close();
         return;
 
@@ -668,7 +712,7 @@ function exec(scrawlObj) {
                     }
                 },
                 onerror: function() {
-                    alert(lang.imageError);
+                    alert("糟糕，图片读取失败了！");
                     dialog.close();
                 }
             };
@@ -680,6 +724,6 @@ function exec(scrawlObj) {
             ajax.request(url, options);
         }
     } else {
-        addMaskLayer(lang.noScarwl + "&nbsp;&nbsp;&nbsp;<input type='button' value='" + lang.continueBtn + "'  onclick='removeMaskLayer()'/>");
+        addMaskLayer("尚未作画，白纸一张~&nbsp;&nbsp;&nbsp;<input type='button' value='" + "继续" + "'  onclick='removeMaskLayer()'/>");
     }
 }

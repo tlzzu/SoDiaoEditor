@@ -6,32 +6,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="noindex, nofollow" />
     <script type="text/javascript" src="../core.js"></script>
-    <link rel="stylesheet" type="text/css" href="scrawl.css">
+    <link rel="stylesheet" type="text/css" href="scrawl.css?_=1292">
 </head>
 
 <body>
     <div class="main" id="J_wrap">
         <div class="hot">
             <div class="drawBoard border_style1">
-                <canvas id="J_brushBoard" class="brushBorad" width="360" height="300"></canvas>
-                <div id="J_picBoard" class="picBoard" style="width: 360px;height: 300px"></div>
+                <!--<canvas id="J_brushBoard" class="brushBorad" width="540" height="450"></canvas>-->
+                <canvas id="J_brushBoard" class="brushBorad" width="598" height="440"></canvas>
+                <div id="J_picBoard" class="picBoard" style="width: 598px;height: 440px"></div>
             </div>
             <div id="J_operateBar" class="operateBar">
                 <span id="J_previousStep" class="previousStep">
                 <em class="icon"></em>
-                <em class="text"><var id="lang_input_previousStep"></var></em>
+                <em class="text">上一步</em>
             </span>
                 <span id="J_nextStep" class="nextStep">
                 <em class="icon"></em>
-                <em class="text"><var id="lang_input_nextsStep"></var></em>
+                <em class="text">下一步</em>
             </span>
                 <span id="J_clearBoard" class="clearBoard">
                 <em class="icon"></em>
-                <em class="text"><var id="lang_input_clear"></var></em>
+                <em class="text">清空</em>
             </span>
                 <span id="J_sacleBoard" class="scaleBoard">
                 <em class="icon"></em>
-                <em class="text"><var id="lang_input_ScalePic"></var></em>
+                <em class="text">缩放背景</em>
             </span>
             </div>
         </div>
@@ -54,9 +55,9 @@
             <div class="sectionBar">
                 <div id="J_addImg" class="addImgH">
                     <em class="icon"></em>
-                    <em class="text"><var id="lang_input_addPic"></var></em>
+                    <em class="text">添加背景</em>
                     <form method="post" id="fileForm" enctype="multipart/form-data" class="addImgH_form" target="up">
-                        <input type="file" name="upfile" id="J_imgTxt" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp" />
+                        <input type="file" name="upfile" id="J_imgTxt" title="添加背景图片" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp" />
                     </form>
                     <iframe name="up" style="display: none"></iframe>
                 </div>
@@ -64,33 +65,50 @@
             <div class="sectionBar">
                 <span id="J_removeImg" class="removeImg">
                 <em class="icon"></em>
-                <em class="text"><var id="lang_input_removePic"></var></em>
+                <em class="text">删除背景</em>
             </span>
             </div>
         </div>
     </div>
     <div id="J_maskLayer" class="maskLayerNull"></div>
 
-    <script type="text/javascript" src="scrawl.js"></script>
+    <script type="text/javascript" src="scrawl.js?_=673793525"></script>
     <script type="text/javascript">
+        //debugger;
         var settings = {
-            drawBrushSize: 3, //画笔初始大小
-            drawBrushColor: "#4bacc6", //画笔初始颜色
-            colorList: ['c00000', 'ff0000', 'ffc000', 'ffff00', '92d050', '00b050', '00b0f0', '0070c0', '002060', '7030a0', 'ffffff',
-                '000000', 'eeece1', '1f497d', '4f81bd', 'c0504d', '9bbb59', '8064a2', '4bacc6', 'f79646'
-            ], //画笔选择颜色
-            saveNum: 10 //撤销次数
-        };
-
+                drawBrushSize: 3, //画笔初始大小
+                drawBrushColor: "#4bacc6", //画笔初始颜色
+                colorList: ['c00000', 'ff0000', 'ffc000', 'ffff00', '92d050', '00b050', '00b0f0', '0070c0', '002060', '7030a0', 'ffffff',
+                    '000000', 'eeece1', '1f497d', '4f81bd', 'c0504d', '9bbb59', '8064a2', '4bacc6', 'f79646'
+                ], //画笔选择颜色
+                saveNum: 10 //撤销次数
+            },
+            thePlugins = "sdescrawl";
         var scrawlObj = new scrawl(settings);
+        var img = UE.plugins[thePlugins].editdom;
+        if (img !== undefined) {
+            var J_brushBoard = document.getElementById('J_brushBoard'),
+                J_picBoard = document.getElementById('J_picBoard');
+            var w = img.width,
+                h = img.height;
+            J_brushBoard.width = w;
+            J_brushBoard.height = h;
+            J_picBoard.style.width = w + 'px';
+            J_picBoard.style.height = h + 'px';
+            scrawlObj.setCanvasData(img);
+        }
         scrawlObj.isCancelScrawl = false;
 
         dialog.onok = function() {
             exec(scrawlObj);
             return false;
         };
+
         dialog.oncancel = function() {
             scrawlObj.isCancelScrawl = true;
+            if (UE.plugins[thePlugins].editdom) {
+                delete UE.plugins[thePlugins].editdom;
+            }
         };
     </script>
 </body>
