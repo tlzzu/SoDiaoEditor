@@ -28,12 +28,12 @@
 
 #### 设计器中对涂鸦双向编辑（2017-7-17）
 ```
-1. 在设计器中对涂鸦双向编辑，可对之前的涂鸦进行二次修改。[可在移动端访问此页面](http://editor.sodiao.org/example/design-design.html)
+1. 在设计器中对涂鸦双向编辑，可对之前的涂鸦进行二次修改。
 ```
 #### 编辑器增加移动化支持（2017-7-3）
-```
-1. 对编辑器中的控件增加移动化支持，对移动设备访问编辑，无需配置，自动启用移动化适配。[可在移动端访问此页面](http://editor.sodiao.org/example/design-editor.html)
-```
+
+对编辑器中的控件增加移动化支持，对移动设备访问编辑，无需配置，自动启用移动化适配。[可在移动端访问此页面](http://editor.sodiao.org/example/design-editor.html)
+
 #### 增加日期控件、复选框控件（2017-5-14）
 ```
 1. 增加日期控件。可以设置最大、最小范围。
@@ -54,8 +54,8 @@
 ```
 ## 展示
 ![ ](example/img/1.gif)
-![ ](example/img/2.gif)
 ![ ](example/img/3.gif)
+![ ](example/img/2.gif)
 ## [预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
