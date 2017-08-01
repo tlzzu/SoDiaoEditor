@@ -267,6 +267,7 @@ html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传�
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
+showSource() | 切换源码模式和正常编辑模式 | 切换源码模式和正常编辑模式
 ##### toolbar完整配置项
 ```
 toolbars: {
