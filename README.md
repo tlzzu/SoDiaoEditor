@@ -141,6 +141,8 @@ sde.config.js           核心配置文件
                     '</div>' +
                     '<h1 style="font-size: 14px;height: 45px;line-height: 45px;margin: 0 auto;text-align: center;font-weight: normal;color:#fff;" >SoDiaoEditor电子病历编辑器</h1>' +
                     '</div>', //自定义title
+				iframe_js_src: "", //iframe中添加js脚本，可以为string或Array类型
+				iframe_css_src: "" //iframe中添加css脚本，可以为string或Array类型
             });
         };
     </script>
