@@ -1,5 +1,10 @@
 # SoDiaoEditor.v2
 > 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)。很欣慰，该项目已经至少在2所三甲医院得到了应用，愿医疗行业越来越好，谨以此献给那些还在医疗行业奋斗的小伙伴。
+## 愿景
+1. 成为电子病历编辑的通用标准；
+2. 愿医疗行业更健康；
+3. 愿各位码农少加班；
+	
 ## 交流
 QQ群：370844065
 ## 更新
