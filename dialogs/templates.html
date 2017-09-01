@@ -125,7 +125,7 @@
         };
         dialog.onok = function() {
             var index = $('#sde-content>tr.selected').attr('index') * 1;
-            editor.execCommand('insertHtml', currentData[index].HTML);
+            editor.execCommand('insertHtml', "<span> </span>" + currentData[index].HTML + "<span> </span>");
         };
     </script>
 </body>

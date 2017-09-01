@@ -235,7 +235,7 @@
                         oNode.setAttribute('class', 'sde-bg');
                         oNode.innerHTML = html; //todo:具体需要实现
 
-                        editor.execCommand('insertHtml', oNode.outerHTML);
+                        editor.execCommand('insertHtml', "<span> </span>" + oNode.outerHTML + "<span> </span>");
                     } catch (e) {
                         try {
                             editor.execCommand('error');

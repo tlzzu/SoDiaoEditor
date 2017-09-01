@@ -405,7 +405,7 @@
                         // oNode.onmousemove = function() {
                         //     alert('onmousemove')
                         // };
-                        editor.execCommand('insertHtml', oNode.outerHTML);
+                        editor.execCommand('insertHtml', "<span> </span>" + oNode.outerHTML + "<span> </span>");
                     } catch (e) {
                         try {
                             editor.execCommand('error');
