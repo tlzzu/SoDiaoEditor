@@ -59,6 +59,10 @@ QQ群：370844065
 ```
 可在 [设计模式--电子病历编辑器]中选中文字，即可出现编辑下过，如果需要这个效果，需设置初始化的mode为DESIGN
 ```
+#### 新增moveToControlPosition 方法，定位到指定的控件（2017-9-5）
+```
+因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。
+```
 ## 展示
 ![ ](example/img/1.gif)
 ![ ](example/img/3.gif)
@@ -277,6 +281,7 @@ getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是�
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 showSource() | 切换源码模式和正常编辑模式 | 切换源码模式和正常编辑模式
+moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
 ##### toolbar完整配置项
 ```
 toolbars: {
@@ -296,6 +301,7 @@ html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传�
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
+moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
 ## 贡献&bug提交
 1. 可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
 2. 可以在github中的Iss中提交；
