@@ -282,6 +282,32 @@ setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 showSource() | 切换源码模式和正常编辑模式 | 切换源码模式和正常编辑模式
 moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
+
+##### 设计器完整配置
+```
+//默认配置
+    defaultOptions: {
+        id: '',
+        title: '', //  //电子病历标题
+        control_templates: [],
+        controls: [], //需要设置的controls的值
+        mode: '', //优先去里面值
+        footer: 'SoDiaoEditor v2.0 电子病历编辑器',
+        //其顺序保证了页面序列化时的顺序
+        toolbars: {
+            'sde-toolbar-file': 'file',
+            'sde-toolbar-editor': ['history', 'clipboard', 'fonts', 'paragraphs', 'styles'],
+            'sde-toolbar-insert': ['horizontal', 'spechars', 'link', 'img', 'map', 'code', 'table', 'formula', 'comment'],
+            'sde-toolbar-tables': ['table', 'blockmergecells', 'alignmergecells'],
+            'sde-toolbar-views': ['directory', 'showcomment', 'preview'],
+            'sde-toolbar-tools': ['drafts', 'print', 'searchreplace', 'wordcount'],
+            'sde-toolbar-records': ['sdetemplate', 'sdecontrols'],
+        },
+        iframe_js_src: "", //iframe中添加js脚本
+        iframe_css_src: "" //iframe中添加css脚本
+    }
+```
+
 ##### toolbar完整配置项
 ```
 toolbars: {
