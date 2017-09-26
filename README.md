@@ -63,6 +63,10 @@ QQ群：370844065
 ```
 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。
 ```
+#### 修改原有的toolbar扩展方法，支持在原有toolbar的tab中继续新增控件（2017-9-26）
+```
+修改原有的toolbar扩展方法，支持在原有toolbar的tab中继续新增控件，注意更新sde.config.js文件，新增 window.SDE_CONFIG.PLUGINS 对象，name值可参见下文中的【toolbar完整配置项】。具体可以参见[编辑模式--电子病历设计器中的源码](http://editor.sodiao.org/example/editor-design.html))
+```
 ## 展示
 ![ ](example/img/1.gif)
 ![ ](example/img/3.gif)
@@ -175,7 +179,8 @@ sde.config.js           核心配置文件
         HOME_URL_DIALOGS: URL + 'dialogs/',//SoDiaoEditor扩展ueditor的dialogs位置
         EDITOR_URL: URL + 'dist/js/sde.editor.js',
         MODE: "DESIGN", //DESIGN:设计|EDITOR:编辑|READONLY:只读（所有节点都不可编辑）
-        CONTROL_TEMPLATES: []//控件模板
+        CONTROL_TEMPLATES: [],//控件模板
+		PLUGINS:[]//toolbar中扩展的组件
     };
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
