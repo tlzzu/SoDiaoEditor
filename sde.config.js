@@ -21,7 +21,8 @@
         HOME_URL_DIALOGS: URL + 'dialogs/',
         EDITOR_URL: URL + 'dist/js/sde.editor.js',
         MODE: "DESIGN", //DESIGN:设计|EDITOR:编辑|READONLY:只读（所有节点都不可编辑）
-        CONTROL_TEMPLATES: []
+        CONTROL_TEMPLATES: [],
+        PLUGINS: [] //新增组件扩展接口，这里可以扩展组件
     };
 
     /**
@@ -38,7 +39,8 @@
         allowDivTransToP: false, //允许进入编辑器的div标签自动变成p标签
         wordCount: false, //关闭字数统计
         elementPathEnabled: false, //关闭elementPath
-        autoClearinitialContent: false
+        autoClearinitialContent: false,
+        enableAutoSave: false //关闭自动保存
     };
 
     function getUEBasePath(docUrl, confUrl) {
