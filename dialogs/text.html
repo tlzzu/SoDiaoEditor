@@ -42,11 +42,11 @@
             <tr>
                 <td>
                     <select id="txtVERIFYTYPE">
-                        <option value="text" selected="selected">普通文本</option>
-                        <option value="email">邮箱地址</option>
-                        <option value="int">整数</option>
-                        <option value="float">小数</option>
-                        <option value="idcard">身份证号码</option>
+                        <option value="\S" selected="selected">普通文本</option>
+                        <option value="^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$">邮箱地址</option>
+                        <option value="^[0-9]*$">整数</option>
+                        <option value="^-?\d+\.\d+$">小数</option>
+                        <option value="^\d{15}|\d{}18$">身份证号码</option>
                     </select>
                 </td>
                 <td><input type="text" id="txtVALUE" placeholder="默认值"></td>
