@@ -681,7 +681,7 @@ function exec(scrawlObj) {
         } else {
             var img = document.createElement('img');
             img.setAttribute('src', 'data:image/png;base64,' + base64);
-            img.setAttribute("scrawl", true);
+            img.classList.add("sde-scrawl"); //刚刚改了这里，明天需要把样式加一下、plugin加一下
             editor.execCommand('insertHtml', img.outerHTML, true);
         }
         dialog.close();
