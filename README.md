@@ -299,6 +299,7 @@ setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 showSource() | 切换源码模式和正常编辑模式 | 切换源码模式和正常编辑模式
 moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
+unCheckControl() | 去除执行checkControl时发现错误值加的背景色 | 
 checkControl(obj) | 校验控件值是否符合要求 | 具体使用如下：
 ```
 //调用方式如下
@@ -358,6 +359,7 @@ getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是�
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
+unCheckControl() | 去除执行checkControl时发现错误值加的背景色 | 
 checkControl(obj) | 校验控件值是否符合要求 | 具体使用如下：
 ```
 //调用方式如下
