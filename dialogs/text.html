@@ -100,7 +100,16 @@
                     $G('txtTAG').value = json.TAG;
                     $G('txtVALUE').value = json.VALUE;
                     $G('txtDESCNAME').value = json.DESCNAME;
-                    $G('txtVERIFYTYPE').value = json.VERIFYTYPE;
+                    //作为对原email、int类型值的过渡处理
+                    var vType = {
+                        "int": "^[0-9]*$",
+                        "email": "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$",
+                        "text": "\\S",
+                        "float": "^-?\\d+\\.\\d+$",
+                        "idcard": "^\\d{15}|\\d{}18$"
+                    };
+                    var regStr = vType[json.VERIFYTYPE];
+                    $G('txtVERIFYTYPE').value = regStr ? regStr : json.VERIFYTYPE;
                     if (json.REQUIRED == 1) {
                         $G('txtREQUIRED').checked = true;
                     }
