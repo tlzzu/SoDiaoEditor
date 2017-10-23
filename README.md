@@ -79,6 +79,10 @@ sde.checkControl({
 },false/true);//默认为false，如果为true表示校验所有控件，如果为false表示发现不符合规则的控件值即停止往下检查。为true且发现同时有多个控件不符合要求时 error会被触发多次
 请同时更新dialogs/text.html文件！
 ```
+#### [2017-10-23]新增showControl、hideControl、deleteControl接口
+```
+分别为显示、隐藏、删除控件接口
+```
 ## 展示
 ![ ](example/img/1.gif)
 ![ ](example/img/3.gif)
@@ -296,6 +300,9 @@ ready(function(){}) | 编辑器加载完成 | (之后的所有方法必须在rea
 html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传递，则为获取，有值则为设置
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
+deleteControl(id) | 删除编辑器中的控件 | id为必填
+showControl(id) | 显示编辑器中的控件 | id为必填
+hideControl(id) | 隐藏编辑器中的控件 | id为必填
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 showSource() | 切换源码模式和正常编辑模式 | 切换源码模式和正常编辑模式
 moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
@@ -357,6 +364,9 @@ toolbars: {
 html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传递，则为获取，有值则为设置
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
 setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
+deleteControl(id) | 删除编辑器中的控件 | id为必填
+showControl(id) | 显示编辑器中的控件 | id为必填
+hideControl(id) | 隐藏编辑器中的控件 | id为必填
 setMode(mode) | 设置编辑器模式 | mode可选：DESIGN（设计）、EDITOR（编辑）、READONLY（只读）
 moveToControlPosition(id) | 定位到指定控件位置 | 因为页面可能存在多个id相同的控件，所以可以多次调用，定位到需要的位置。id为控件的id
 unCheckControl() | 去除执行checkControl时发现错误值加的背景色 | 
