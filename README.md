@@ -327,6 +327,7 @@ sde.checkControl({
     defaultOptions: {
         id: '',
         title: '', //  //电子病历标题
+		width:664,//可不写，默认宽度：664
         control_templates: [],
         controls: [], //需要设置的controls的值
         mode: '', //优先去里面值
@@ -375,6 +376,7 @@ checkControl(obj) | 校验控件值是否符合要求 | 具体使用如下：
 //调用方式如下
 sde.checkControl({
 	id:"可选，也可不写，如果不填就是校验所有控件！"
+	width:664,//可不写，默认宽度：664
 	error:function(obj){//错误信息时触发，其中obj：{model:{json对象},msg:"错误信息！"}
 		console.log(obj);
 	},success:function(){//校验成功时触发
