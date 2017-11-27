@@ -299,7 +299,7 @@ sde.config.js           核心配置文件
 ready(function(){}) | 编辑器加载完成 | (之后的所有方法必须在ready加载完成后使用）
 html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传递，则为获取，有值则为设置
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
-setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
+setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结READONLY：1为冻结，只读不可操作
 deleteControl(id) | 删除编辑器中的控件 | id为必填
 showControl(id) | 显示编辑器中的控件 | id为必填
 hideControl(id) | 隐藏编辑器中的控件 | id为必填
@@ -364,7 +364,7 @@ toolbars: {
 ---|---|---
 html([html]) | 获取/设置所有编辑器中的html模板 | 如果html不传递，则为获取，有值则为设置
 getControl([id]) | 获取编辑器中的控件 | id为可选，若为无则是获取所有控件
-setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结REQUIRED：1为冻结，只读不可操作
+setControl(ctl) | 设置编辑器中指定id的控件值 | ctl：{ID:'',VALUE:''}如果是select控件类型ctl：{ID:'',VALUE:'',TEXT:''}。ctl可以为数组也可以为对象，设置冻结READONLY：1为冻结，只读不可操作
 deleteControl(id) | 删除编辑器中的控件 | id为必填
 showControl(id) | 显示编辑器中的控件 | id为必填
 hideControl(id) | 隐藏编辑器中的控件 | id为必填
