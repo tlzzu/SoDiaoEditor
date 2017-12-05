@@ -1,5 +1,19 @@
 # SoDiaoEditor.v2
 > 更多精彩请移步[博客园文章](http://www.cnblogs.com/tlzzu/p/6654208.html)，阅读英文版请移步[这里](https://github.com/tlzzu/SoDiaoEditor.v2/blob/master/README-en.md)。很欣慰，该项目已经至少在2所三甲医院得到了应用，愿医疗行业越来越好，谨以此献给那些还在医疗行业奋斗的小伙伴。
+
+[1 前言](#1-%E5%89%8D%E8%A8%80)
+[愿景](#愿景)
+[交流](#交流)
+[更新](#更新)
+[效果展示](#效果展示)
+[在线预览](#在线预览)
+[目录结构](#目录结构)
+[使用说明](#使用说明)
+[API文档](#API文档)
+[需求&bug提交](#需求&bug提交)
+[打赏](#打赏)
+
+
 ## 愿景
 1. 成为电子病历编辑的通用标准；
 2. 愿医疗行业更健康；
@@ -7,7 +21,7 @@
 	
 ## 交流
 QQ群：370844065
-## 更新
+## 更新记录
 #### [2017-03-30]首次更新
 1. 新增以下toolbar：
 ```
@@ -83,11 +97,11 @@ sde.checkControl({
 ```
 分别为显示、隐藏、删除控件接口
 ```
-## 展示
+## 效果展示
 ![ ](example/img/1.gif)
 ![ ](example/img/3.gif)
 ![ ](example/img/2.gif)
-## [预览](http://editor.sodiao.org/example/index.html)
+## [在线预览](http://editor.sodiao.org/example/index.html)
 1. [设计模式--电子病历设计器(扩展toolbar)](http://editor.sodiao.org/example/design-design.html)
 ```
 建议给病历模板设计者（开发人员，或者科主任）使用。
@@ -125,7 +139,7 @@ sde.checkControl({
 ```
 按钮通过事件控制！
 ```
-## 结构
+## 目录结构
 ```shell
 data                    模拟异步请求的数据，正式项目中可忽略
 dialogs                 扩展百度ueditor的dialogs
@@ -138,7 +152,7 @@ example                 一些demo
 ueditor                 百度ueditor库，可替换成自己版本
 sde.config.js           核心配置文件
 ```
-## 使用
+## 使用说明
 ##### 电子病历设计器：
 ```
 <!DOCTYPE html>
@@ -292,7 +306,7 @@ sde.config.js           核心配置文件
 
 
 
-## 文档
+## API文档
 ##### 电子病历设计器：
 方法 | 说明 | 描述
 ---|---|---
@@ -385,7 +399,7 @@ sde.checkControl({
 },false/true);//默认为false，如果为true表示校验所有控件，如果为false表示发现不符合规则的控件值即停止往下检查。为true且发现同时有多个控件不符合要求时 error会被触发多次
 请同时更新dialogs/text.html文件！
 ```
-## 贡献&bug提交
+## 需求&bug提交
 1. 可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
 2. 可以在github中的Iss中提交；
 ## 打赏
