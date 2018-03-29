@@ -58,9 +58,9 @@ QQ 群：**370844065** （已有近百家医疗企业开发人员，欢迎进群
 
 #### V3 版本：
 
-//todo v3 版本 gif
+![image](document/1.gif)
 
-## [在线预览](http://editor.sodiao.org/example/index.html)
+## [在线预览](http://editor.sodiao.org/)
 
 SDE 分为两大编辑器：
 
