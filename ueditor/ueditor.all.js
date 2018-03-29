@@ -12162,7 +12162,6 @@
         });
         me.commands['removeformat'] = {
             execCommand: function(cmdName, tags, style, attrs, notIncludeA) {
-
                 var tagReg = new RegExp('^(?:' + (tags || this.options.removeFormatTags).replace(/,/g, '|') + ')$', 'i'),
                     removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(','),
                     range = new dom.Range(this.document),
@@ -17547,9 +17546,18 @@
                         node.style.clear = 'both';
                         currentHeight = Math.max(domUtils.getXY(node).y + node.offsetHeight + 25, Math.max(options.minFrameHeight, options.initialFrameHeight));
                         if (currentHeight != lastHeight) {
-                            if (currentHeight !== parseInt(me.iframe.parentNode.style.height)) {
+                            //todo tlzzu 2018-1-25 09:00:48 取最大的那个高度
+                            var oldHeight = parseInt(me.iframe.parentNode.style.height);
+                            if (currentHeight !== oldHeight) {
+                                if (currentHeight < oldHeight) { 
+                                    currentHeight = oldHeight;
+                                }
                                 me.iframe.parentNode.style.height = currentHeight + 'px';
                             }
+                            // old code
+                            // if (currentHeight !== parseInt(me.iframe.parentNode.style.height)) {
+                            //     me.iframe.parentNode.style.height = currentHeight + 'px';
+                            // }
                             me.body.style.height = currentHeight + 'px';
                             lastHeight = currentHeight;
                         }
@@ -22440,7 +22448,11 @@
         var uiUtils = UE.ui.uiUtils;
 
         me.addListener('contextmenu', function(type, evt) {
-
+            //todo tlzzu 2018-3-1 09:38:26 新增代码段 为了解决动态设置右键菜单的问题
+            if (me.getOpt('enableContextMenu') === false) {
+                domUtils.preventDefault(evt);
+                return;
+            }
             var offset = uiUtils.getViewportOffsetByEvent(evt);
             me.fireEvent('beforeselectionchange');
             if (menu) {
@@ -24144,7 +24156,10 @@
                 },
 
                 'contentchange': function() {
-
+					//todo tlzzu 2018-1-26 09:47:36 新增加的代码-》用于处理一旦不允许自动保存即不弹出保存功能
+                    if (!me.getOpt('enableAutoSave')) {
+                        return;
+                    }
                     if (!saveKey) {
                         return;
                     }

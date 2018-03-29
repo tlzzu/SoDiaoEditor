@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>单选框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+
+    <script src="core.js?dd=132"></script>
+    <script src="jscolor-2.0.4/jscolor.min.js"></script>
+    <script src="js/jQuery.v3.1.2-pre.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <style>
+      #cbxs {
+        margin-left: 0;
+      }
+      
+      #cbxs li {
+        list-style: none;
+        clear: both;
+        line-height: 30px;
+        margin-left: 0;
+        display: flex;
+      }
+      
+      #cbxs>li>label {
+        float: left;
+        line-height: 30px;
+      }
+      
+      #cbxs>li>label>input[type="radio"],
+      #cbxs>li>label>input[type="checkbox"] {
+        margin: 8px 0 0;
+      }
+      
+      #cbxs li a {
+        display: none;
+      }
+      
+      #cbxs li:hover a {
+        display: inline;
+      }
+      
+      .alert ol {
+        list-style-type: demical;
+      }
+      
+      .alert ol li {
+        list-style-position: outside;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <h1>
+        单选框
+      </h1>
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">*</span></th>
+          <th><span>控件名称</span><span class="label label-important">*</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtNAME" onchange="$G('txtDESCNAME').value = $G('txtNAME').value" placeholder="必填项"></td>
+        </tr>
+        <tr>
+          <th><span>标签</span> </th>
+          <th><span>描述名</span> </th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtTAG" placeholder="标签,多个用逗号隔开"></td>
+          <td><input type="text" id="txtDESCNAME" placeholder="描述名"></td>
+        </tr>
+
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span></span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor" placeholder="颜色" value="000000">
+          </td>
+          <td>
+            <!--<div class="input-append">
+                        <input type="text" id="txtDEFAULTVALUE" readonly="readonly" placeholder="默认值"><a title="删除" class="btn" href="#" onclick="deleteDefaultOption()"><i class="icon-trash"></i></a>
+                    </div>-->
+          </td>
+        </tr>
+        <!--<tr>
+                <th colspan="2"><span>数据</span> </th>
+            </tr>-->
+        <tr>
+          <td colspan="2">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" onclick="$G('txtREMOTEURL').value = '';" data-toggle="tab">固定选项</a></li>
+                <li><a href="#tab2" data-toggle="tab">动态数据</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                  <ul id="cbxs">
+
+                  </ul>
+                  <div class="input-prepend">
+                    <div class="input-append" style="margin-right:10px;">
+                      <button class="btn disabled" type="button">值</button>
+                      <input type="text" id="txtInputValue" onchange="(($G('txtInputDesc').value=='')?$G('txtInputDesc').value = $G('txtInputValue').value:'')" class="span2" placeholder="值" style="width:100px;border-radius:0 4px 4px 0;" />
+                    </div>
+                    <div class="input-append" style="margin-right:10px;">
+                      <button class="btn disabled" type="button">描述</button>
+                      <input type="text" id="txtInputDesc" class="span2" placeholder="描述" style="width:100px;border-radius:0 4px 4px 0;" />
+                    </div>
+                    <div class="btn-group pull-right">
+                      <a title="添加" class="btn btn-primary" onclick="add()" href="#"><i class="icon-white icon-plus"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                  <input type="text" placeholder="支持get请求的完整url地址（http://）" style="width:90%;" id="txtREMOTEURL" />
+                  <div class="alert alert-info">
+                    <h4>提示：</h4>
+                    <ol>
+                      <li>如url中的值不为空此时不关注固定选项中有没有值，优先取地址中的值；</li>
+                      <li>地址中的json格式如下：<br> [{VALUE:'',TEXT:'',CHECKED:0/1}]
+                        <br> CHECKED=0未选中，SELECTED=1已选中
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <script type="text/javascript">
+      // function BINDINGDATAClick(t) {
+      //     if (t.selectedIndex < 0) //点击了 但是没有选中项
+      //         return;
+      //     $G('txtInputValue').value = t.value;
+      //     $G('txtInputDesc').value = t.options[t.selectedIndex].text;
+      // }
+
+      function add() {
+        var ss = $G('cbxs').children;
+        var txtInputValue = $G('txtInputValue').value,
+          txtInputDesc = $G('txtInputDesc').value;
+        var li = document.createElement('li');
+        li.setAttribute('v', txtInputValue);
+        li.setAttribute('d', txtInputDesc);
+        li.innerHTML = '<label class="checkbox cye-lm-tag"><input type="checkbox" class="cye-lm-tag" value="' + txtInputValue + '"/>' + txtInputDesc + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a>'
+        $G('cbxs').appendChild(li);
+      }
+
+
+
+      function upMove(t) {
+        var ss = $G('cbxs').children,
+          current = t.parentNode,
+          previous = current.previousSibling;
+        if (previous.nodeName !== 'LI') return;
+        $G('cbxs').insertBefore(current, previous);
+      }
+
+
+      function downMove(t) {
+        var ss = $G('cbxs').children,
+          current = t.parentNode,
+          next = current.nextSibling;
+        if (next === null) return;
+        $G('cbxs').insertBefore(next, current);
+      }
+
+      function deleteOption(t) {
+        if (confirm('您确定要删除吗？')) {
+          t.parentNode.remove();
+        }
+      }
+      (function(UE) {
+        var oNode = null,
+          thePlugins = 'sdecontrolcbx';
+        //初始化加载之前编辑的数据
+        window.onload = function() {
+          if (UE.plugins[thePlugins].editdom) {
+            oNode = UE.plugins[thePlugins].editdom;
+            var json = JSON.parse(oNode.getAttribute('sde-model'));
+            if (!json || json == null) {
+              alert("无法json序列化！");
+              return;
+            }
+            $G('txtID').value = json.ID;
+            $G('txtNAME').value = json.NAME;
+            $G('txtCOLOR').value = json.COLOR;
+            $G('txtCOLOR').style.backgroundColor = "#" + json.COLOR;
+            $G('txtTAG').value = json.TAG;
+            $G('txtDESCNAME').value = json.DESCNAME;
+            $G('txtREMOTEURL').value = json.REMOTEURL;
+            var html = [];
+            var datas = json.BINDINGDATA;
+            if (datas && datas != undefined && datas != null) {
+              for (var i = 0, l = datas.length; i < l; i++) {
+                var temp = datas[i];
+                html.push('<li v="' + temp.VALUE + '" d="' + temp.TEXT + '"><label class="checkbox cye-lm-tag"><input type="checkbox" ' + ((datas[i].CHECKED != undefined && datas[i].CHECKED == 1) ? ' checked="checked" ' : '') + ' class="cye-lm-tag" value="' + temp.VALUE + '"/>' + temp.TEXT + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a></li>')
+              }
+            }
+            $G('cbxs').innerHTML = html.join('');
+            $G('txtID').setAttribute('readonly', 'readonly');
+          }
+          $G('txtID').focus();
+        };
+
+        function makeHtml(json) {
+          var show = [];
+          if (json.BINDINGDATA && json.BINDINGDATA.length > 0) {
+            for (var i = 0, l = json.BINDINGDATA.length; i < l; i++) {
+              var temp = json.BINDINGDATA[i];
+              show.push('<label><input type="checkbox" ' + ((temp.CHECKED != undefined && temp.CHECKED == 1) ? ' checked="checked" ' : '') + '  value="' + temp.VALUE + '" text="' + temp.TEXT + '"/>' + temp.TEXT + '</label>');
+            }
+          }
+          var html = '<span class="sde-left" style="color:#0000FF' +
+            // ((json.READONLY == 1) ? '#808080' : '#0000FF') +
+            '" contenteditable="false">[</span><span title="' + json.DESCNAME + '" style="color:#' + json.COLOR + ';"  class="sde-value" ' +
+            ' contenteditable="false" >' + show.join('') + '</span><span style="color:#0000FF' +
+            '" contenteditable="false" class="sde-right">]</span>';
+          return html;
+        }
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].editdom) {
+            delete UE.plugins[thePlugins].editdom;
+          }
+        };
+        dialog.onok = function() {
+          if ($G('txtID').value == '') {
+            alert('请输入控件ID');
+            return false;
+          }
+          if ($G('txtNAME').value == '') {
+            alert('请输入控件名称');
+            return false;
+          }
+          var selectData = [], //？？？？选中的数据
+            ss = $G('cbxs').children,
+            value = []; //选中的值？？？？
+          for (var i = 0, l = ss.length; i < l; i++) {
+            var li = ss[i],
+              C = 0;
+            var d = li.getAttribute('d'),
+              v = li.getAttribute('v');
+            if (li.querySelector('input[type=checkbox]:checked') !== null) {
+              value.push({
+                TEXT: d,
+                VALUE: v
+              });
+              C = 1;
+            }
+            selectData.push({
+              TEXT: d,
+              VALUE: v,
+              CHECKED: C
+            });
+          }
+          var json = {
+            ID: $G('txtID').value,
+            TYPE: 'checkbox',
+            NAME: $G('txtNAME').value,
+            TAG: $G('txtTAG').value,
+            DESCNAME: $G('txtDESCNAME').value,
+            COLOR: $G('txtCOLOR').value,
+            VALUE: value,
+            REMOTEURL: $G('txtREMOTEURL').value, //url
+            BINDINGDATA: selectData //数据
+          };
+          var html = makeHtml(json);
+          if (!oNode) {
+            try {
+              oNode = createElement('span', json.ID);
+              oNode.setAttribute('title', json.NAME);
+              oNode.setAttribute('sde-model', JSON.stringify(json));
+              oNode.setAttribute("contenteditable", "false");
+              oNode.setAttribute('class', 'sde-bg');
+              oNode.innerHTML = html; //todo:具体需要实现
+              editor.execCommand('insertHtml', "<span> </span>" + oNode.outerHTML + "<span> </span>");
+            } catch (e) {
+              try {
+                editor.execCommand('error');
+              } catch (e) {
+                alert('控件异常，请联系管理员！');
+              }
+              return false;
+            }
+          } else {
+            oNode.setAttribute('title', json.NAME);
+            oNode.setAttribute('id', json.ID);
+            oNode.setAttribute('sde-model', JSON.stringify(json));
+            oNode.innerHTML = html;
+            delete UE.plugins[thePlugins].editdom;
+          }
+        };
+      })(UE);
+    </script>
+  </body>
+
+</html>

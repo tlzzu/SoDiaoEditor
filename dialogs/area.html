@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>区域控件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="core.js"></script>
+    <script src="jscolor-2.0.4/jscolor.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">（可选）</span></th>
+          <th><span>控件名称</span><span class="label label-important">（title）</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder=""></td>
+          <td><input type="text" id="txtTITLE" placeholder=""></td>
+        </tr>
+        <tr>
+          <th><span>扩展属性</span> </th>
+          <th><span>默认值</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtMODEL" placeholder="扩展属性">
+          </td>
+          <td><input type="text" id="txtVALUE" placeholder="默认值，支持html标签"></td>
+        </tr>
+        <!-- <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span></span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor" placeholder="颜色" value="000000">
+          </td>
+          <td>
+          </td>
+        </tr> -->
+      </table>
+    </div>
+
+    <script type="text/javascript">
+      //debugger;
+      (function(UE) {
+        var oNode = null,
+          thePlugins = 'sdecontrolarea';
+        //初始化加载之前编辑的数据
+        window.onload = function() {
+          if (UE.plugins[thePlugins].editdom) {
+            oNode = UE.plugins[thePlugins].editdom;
+            $G('txtID').value = oNode.getAttribute('id') || '';
+            $G('txtTITLE').value = oNode.getAttribute('title') || '';
+            $G('txtMODEL').value = oNode.getAttribute('sde-model') || '';
+            $G('txtVALUE').value = oNode.innerHTML;
+          }
+          $G('txtID').focus();
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].editdom) {
+            delete UE.plugins[thePlugins].editdom;
+          }
+        };
+        dialog.onok = function() {
+          if (!oNode) {
+            try {
+              oNode = createElement('div', $G('txtID').value);
+              oNode.setAttribute('title', $G('txtTITLE').value);
+              oNode.setAttribute('sde-model', $G('txtMODEL').value);
+              oNode.setAttribute('contenteditable', false);
+              oNode.classList.add('sde-area');
+              oNode.classList.add('sde-area-mode-normal');
+              oNode.innerHTML = '<div contenteditable="true">' + $G('txtVALUE').value + '</div>'; //todo:具体需要实现
+              editor.execCommand('insertHtml', oNode.outerHTML);
+            } catch (e) {
+              try {
+                editor.execCommand('error');
+              } catch (e) {
+                alert('控件异常，请联系管理员！');
+              }
+              return false;
+            }
+          } else {
+            oNode.setAttribute('title', $G('txtTITLE').value);
+            oNode.setAttribute('id', $G('txtID').value);
+            oNode.setAttribute('sde-model', $G('txtMODEL').value);
+            oNode.innerHTML = '<div contenteditable="true">' + $G('txtVALUE').value + '</div>';
+            delete UE.plugins[thePlugins].editdom;
+          }
+        };
+      })(UE);
+    </script>
+  </body>
+
+</html>

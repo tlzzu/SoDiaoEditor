@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>文本输入框</title>
+    <title>多行文本输入框</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -36,19 +36,12 @@
           <td><input type="text" id="txtDESCNAME" placeholder="描述名"></td>
         </tr>
         <tr>
-          <th><span>数据类型</span> </th>
+          <th><span></span> </th>
           <th><span>默认值</span> </th>
         </tr>
         <tr>
           <td>
-            <select id="txtVERIFYTYPE">
-                        <option value="\S" selected="selected">普通文本</option>
-                        <option value="^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$">邮箱地址</option>
-                        <option value="^[0-9]*$">整数</option>
-                        <option value="int">实时检测整数</option>
-                        <option value="^-?\d+\.\d+$">小数</option>
-                        <option value="^\d{15}|\d{}18$">身份证号码</option>
-                    </select>
+
           </td>
           <td><input type="text" id="txtVALUE" placeholder="默认值"></td>
         </tr>
@@ -82,7 +75,7 @@
       //debugger;
       (function(UE) {
         var oNode = null,
-          thePlugins = 'sdecontroltext';
+          thePlugins = 'sdecontroltextarea';
         //初始化加载之前编辑的数据
         window.onload = function() {
           if (UE.plugins[thePlugins].editdom) {
@@ -101,16 +94,6 @@
             $G('txtTAG').value = json.TAG;
             $G('txtVALUE').value = json.VALUE;
             $G('txtDESCNAME').value = json.DESCNAME;
-            //作为对原email、int类型值的过渡处理
-            var vType = {
-              "int": "^[0-9]*$",
-              "email": "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$",
-              "text": "\\S",
-              "float": "^-?\\d+\\.\\d+$",
-              "idcard": "^\\d{15}|\\d{}18$"
-            };
-            var regStr = vType[json.VERIFYTYPE];
-            $G('txtVERIFYTYPE').value = regStr ? regStr : json.VERIFYTYPE;
             if (json.REQUIRED == 1) {
               $G('txtREQUIRED').checked = true;
             }
@@ -131,13 +114,9 @@
           }
           if (json.READONLY == 1)
             isClear = 0;
-          var html = '<span class="sde-left" style="color:' +
-            ((json.READONLY == 1) ? '#808080' : '#0000FF') +
-            '" contenteditable="false">[</span><span  title="' + json.DESCNAME + '"  style="color:#' + json.COLOR + ';"  class="sde-value" ' +
+          var html = '<div  title="' + json.DESCNAME + '"  style="color:#' + json.COLOR + ';"  class="sde-value" ' +
             ((json.READONLY == 1) ? ' contenteditable="false" ' : ' contenteditable="true" ') +
-            '>' + show + '</span><span style="color:' +
-            ((json.READONLY == 1) ? '#808080' : '#0000FF') +
-            '" contenteditable="false" class="sde-right">]</span>';
+            '>' + show + '</div>';
           return html;
         }
         dialog.oncancel = function() {
@@ -161,7 +140,6 @@
             NAME: $G('txtNAME').value,
             TAG: $G('txtTAG').value,
             DESCNAME: $G('txtDESCNAME').value,
-            VERIFYTYPE: $G('txtVERIFYTYPE').value,
             VALUE: $G('txtVALUE').value,
             REQUIRED: 0,
             READONLY: 0,
@@ -180,10 +158,11 @@
               oNode.setAttribute('title', json.NAME);
               oNode.setAttribute('sde-model', JSON.stringify(json));
               oNode.setAttribute("contenteditable", "false");
-              oNode.setAttribute('class', 'sde-bg');
+              oNode.classList.add('sde-ctrl-textarea');
+              oNode.classList.add('sde-bg');
               oNode.innerHTML = html; //todo:具体需要实现
 
-              editor.execCommand('insertHtml', "<span> </span>" + oNode.outerHTML + "<span> </span>");
+              editor.execCommand('insertHtml', oNode.outerHTML);
             } catch (e) {
               try {
                 editor.execCommand('error');
