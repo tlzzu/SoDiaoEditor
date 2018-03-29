@@ -699,7 +699,7 @@
           id: "myEditor1",
           title: '<div style="height: 45px;background-color: #16742B;">' +
             '<div class="left" style="position:absolute;top:0;left:0;">' +
-            '<img src="src/img/SoDiaoL.png" style="height:35px;margin:5px;border:none;" />' +
+            '<img src="../static/SoDiaoL.png" style="height:35px;margin:5px;border:none;" />' +
             '</div>' +
             '<h1 style="font-size: 14px;height: 45px;line-height: 45px;margin: 0 auto;text-align: center;font-weight: normal;color:#fff;" >SoDiaoEditor.v3.电子病历编辑器2222</h1>' +
             '<div style="float:right;position: absolute;top: 10px;right: 10px;">控件按钮!</div>' +

@@ -107,7 +107,7 @@ dist
         sde.design.js   //SoDiaoEditor设计器核心js
         sde.editor.js   //SoDiaoEditor编辑器核心js
 example                 //一些demo
-ueditor                 //因ue存在部分bug，请经过本人调整过的版本。
+ueditor                 //因ue存在部分bug，请使用经过本人调整过的版本。
 sde.config.js           //配置文件
 ```
 
