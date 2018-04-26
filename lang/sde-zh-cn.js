@@ -127,7 +127,8 @@
         'sdecontroltext': '单行文本',
         'sdecontrolselect': '下拉列表',
         'sdecontroldate': '日期输入',
-        'sdecontrolcbx': '复选框'
+        'sdecontrolcbx': '复选框',
+        'sdecontrolradio': '单选框'
       }
     }
   }

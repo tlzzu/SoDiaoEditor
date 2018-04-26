@@ -158,7 +158,7 @@
         var li = document.createElement('li');
         li.setAttribute('v', txtInputValue);
         li.setAttribute('d', txtInputDesc);
-        li.innerHTML = '<label class="checkbox cye-lm-tag"><input type="checkbox" class="cye-lm-tag" value="' + txtInputValue + '"/>' + txtInputDesc + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a>'
+        li.innerHTML = '<label class="radio cye-lm-tag"><input type="radio" name="radio" class="cye-lm-tag" value="' + txtInputValue + '"/>' + txtInputDesc + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a>'
         $G('cbxs').appendChild(li);
       }
 
@@ -210,7 +210,7 @@
             if (datas && datas != undefined && datas != null) {
               for (var i = 0, l = datas.length; i < l; i++) {
                 var temp = datas[i];
-                html.push('<li v="' + temp.VALUE + '" d="' + temp.TEXT + '"><label class="checkbox cye-lm-tag"><input type="checkbox" ' + ((datas[i].CHECKED != undefined && datas[i].CHECKED == 1) ? ' checked="checked" ' : '') + ' class="cye-lm-tag" value="' + temp.VALUE + '"/>' + temp.TEXT + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a></li>')
+                html.push('<li v="' + temp.VALUE + '" d="' + temp.TEXT + '"><label class="radio cye-lm-tag"><input type="radio" name="radio" ' + ((datas[i].CHECKED != undefined && datas[i].CHECKED == 1) ? ' checked="checked" ' : '') + ' class="cye-lm-tag" value="' + temp.VALUE + '"/>' + temp.TEXT + '</label><a title="上移" class="btn" href="#" onclick="upMove(this)" style="margin-left:30px;"><i class="icon-arrow-up"></i></a><a title="下移" class="btn" href="#" onclick="downMove(this)"><i class="icon-arrow-down"></i></a><a title="删除" class="btn" href="#" onclick="deleteOption(this)"><i class="icon-trash"></i></a></li>')
               }
             }
             $G('cbxs').innerHTML = html.join('');
@@ -224,7 +224,7 @@
           if (json.BINDINGDATA && json.BINDINGDATA.length > 0) {
             for (var i = 0, l = json.BINDINGDATA.length; i < l; i++) {
               var temp = json.BINDINGDATA[i];
-              show.push('<label><input type="checkbox" ' + ((temp.CHECKED != undefined && temp.CHECKED == 1) ? ' checked="checked" ' : '') + '  value="' + temp.VALUE + '" text="' + temp.TEXT + '"/>' + temp.TEXT + '</label>');
+              show.push('<label><input type="radio" name="' + json.ID + '" ' + ((temp.CHECKED != undefined && temp.CHECKED == 1) ? ' checked="checked" ' : '') + '  value="' + temp.VALUE + '" text="' + temp.TEXT + '"/>' + temp.TEXT + '</label>');
             }
           }
           var html = '<span class="sde-left" style="color:#0000FF' +
@@ -256,7 +256,7 @@
               C = 0;
             var d = li.getAttribute('d'),
               v = li.getAttribute('v');
-            if (li.querySelector('input[type=checkbox]:checked') !== null) {
+            if (li.querySelector('input[type=radio]:checked') !== null) {
               value.push({
                 TEXT: d,
                 VALUE: v
@@ -271,7 +271,7 @@
           }
           var json = {
             ID: $G('txtID').value,
-            TYPE: 'checkbox',
+            TYPE: 'radio',
             NAME: $G('txtNAME').value,
             TAG: $G('txtTAG').value,
             DESCNAME: $G('txtDESCNAME').value,
