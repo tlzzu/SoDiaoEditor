@@ -304,6 +304,14 @@ _导入xml，isRefreshControl参数表示是否刷新xml中的控件值_
 
 _导出xml，返回string类型的xml_
 
+#### toXML(json)
+
+_根据自定义json对象导出xml,可自由拼装xml，注意：该方法导出的xml不可使用importXML进行导入，返回string_
+
+```js
+sde.toXML({root:{name:'SDE'}})//<root><name>SDE<name></root>
+```
+
 ## toolbar-工具栏
 
 toolbar 中的控件基本已全部实现。部分功能后续将持续完善。
