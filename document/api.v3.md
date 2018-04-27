@@ -296,6 +296,14 @@ sde.checkControl({
 
 _去除执行[checkControl](#checkControl-obj)时发现错误值加的背景色，否则第二次加载模板时该错误背景色仍然会存在_
 
+#### importXML(xml,isRefreshControl)
+
+_导入xml，isRefreshControl参数表示是否刷新xml中的控件值_
+
+#### exportXML()
+
+_导出xml，返回string类型的xml_
+
 ## toolbar-工具栏
 
 toolbar 中的控件基本已全部实现。部分功能后续将持续完善。
@@ -375,6 +383,7 @@ var sde = new SDE({
   title: '', //自定义title
   footer: '',
   toolbars: {
+    'sde-toolbar-test': '', //自定义bar插入顺序
     'sde-toolbar-records': ['sdetemplate', 'sdecontrols'],
     'sde-toolbar-editor': ['history', 'clipboard', 'fonts', 'paragraphs'],
   },
