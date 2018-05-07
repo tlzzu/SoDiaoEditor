@@ -1,0 +1,15 @@
+{
+  "name": "SoDiaoEditor",
+  "version": "v3.0",
+  "description": "电子病历编辑器,EMR Editor",
+  "author": "tlzzu",
+  "keywords": [
+    "webpack",
+	"ueditor",
+	"emr",
+	"editor"
+  ],
+  "dependencies": {
+    "ueditor": "*"
+  }
+}

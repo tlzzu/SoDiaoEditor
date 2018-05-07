@@ -1,0 +1,31 @@
+{
+  "name": "SoDiaoEditor",
+  "version": "2.1.0",
+  "description": "",
+  "author": "tlzzu",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "dependencies": {
+    "flatpickr": "^2.6.1",
+    "html2canvas": "^1.0.0-alpha.9",
+    "rome": "^2.1.22",
+    "webpack": "^2.2.1",
+    "x2js": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "css-loader": "^0.21.0",
+    "file-loader": "^0.10.0",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.2.1"
+  }
+}
