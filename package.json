@@ -3,6 +3,7 @@
   "version": "v3.0",
   "description": "电子病历编辑器,EMR Editor",
   "author": "tlzzu",
+  "license": "GPL",
   "keywords": [
     "webpack",
 	"ueditor",
