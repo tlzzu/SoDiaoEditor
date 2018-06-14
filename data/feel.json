@@ -1,0 +1,3 @@
+{
+  "data": [{ "label": "感觉很好", "value": 1 }, { "label": "感觉一般", "value": 2 }, { "label": "无感觉", "value": 3 }, { "label": "感觉糟糕", "value": 4 }]
+}

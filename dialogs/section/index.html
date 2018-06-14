@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文档段</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="../js/jQuery.v3.1.2-pre.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../core.js"></script>
+    <script src="../jscolor-2.0.4//jscolor.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">*</span></th>
+          <th><span>描述</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtDESC" placeholder="必填项"></td>
+        </tr>
+        <tr style="display:none">
+          <td></td>
+          <td></td>
+        </tr>
+        <!-- <tr>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtREQUIRED" type="checkbox" /> 是否必填 </label>
+          </td>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtSTRICTVERIFY" type="checkbox" /> 强制校验 </label>
+          </td>
+        </tr> -->
+        <tr>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtNOTDEL" type="checkbox" /> 不许删除 </label>
+          </td>
+          <td style="background-color: white;">
+
+          </td>
+        </tr>
+        <tr>
+          <th><span>控件模式</span> </th>
+          <th><span></span> </th>
+        </tr>
+        <tr>
+          <td>
+            <select id="txtMODE">
+                  <option value="EDITOR" selected="selected">编辑模式</option>
+                  <option value="READONLY">只读模式</option>
+                  <option value="UNVISIBLE">不可见模式</option>
+                  <option value="HIDE">隐藏模式</option>
+                </select>
+            <!-- <input id="txtVERIFY" placeholder="校验正则" type="text" /> -->
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span>背景色</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor {required:false}" class="jscolor" placeholder="字体颜色">
+          </td>
+          <td>
+            <input type="text" id="txtBACKGROUND" placeholder="背景颜色" class="jscolor {required:false}">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      /*
+            section运行时结构：
+            <div class="sde-ctrl sde-section" contenteditable="false" sde-type="section" id="section1" sde-model="%7B%22mode%22%3A%22EDITOR%22%2C%22originalmode%22%3A%22EDITOR%22%7D">
+              <p contenteditable="true" class="sde-value">
+                内容
+              </p>
+            </div>
+            其中新建控件时必须满足结构：
+            <div class="sde-ctrl sde-section" contenteditable="false" sde-type="section" id="section1">
+              <p contenteditable="true" class="sde-value">
+                内容
+              </p>
+            </div>
+            其余内容会通过insertControl命令进行创建。
+            注意：此时sde-value必须是P标签。
+            */
+      (function(UE) {
+        window.rgb = function() {
+          return arguments;
+        };
+
+        function formatRGB(rgbStr) {
+          return eval(rgbStr);
+        };
+        var thePlugins = 'sdectrlsection',
+          ctrl, opt, domCtrl;
+        window.onload = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            ctrl = UE.plugins[thePlugins].sdectrl; //获取具体的组件
+            opt = ctrl.getOpt(),
+              domCtrl = ctrl.getCtrlElement();
+            var domValue = ctrl.getValueElement();
+            $('#txtID').val(domCtrl.getAttribute('id'));
+            $('#txtDESC').val(opt.desc);
+            // if (opt.required === 1) {
+            //   $G('txtREQUIRED').checked = true;
+            // }
+            // if (opt.strictverify === 1) {
+            //   $G('txtSTRICTVERIFY').checked = true;
+            // }
+            if (opt.notdel === 1) {
+              $G('txtNOTDEL').checked = true;
+            }
+            // $('#txtVERIFY').val(opt.verify);
+            $('#txtMODE').val(opt.mode);
+            if (domValue.style.color.indexOf('rgb') === 0) {
+              var tempColor = formatRGB((domValue.style.color || '').trim('#'));
+              document.getElementById('txtCOLOR').jscolor.fromRGB(tempColor[0], tempColor[1], tempColor[2]);
+            } else {
+              document.getElementById('txtCOLOR').value = (domValue.style.color || '').trim('#');
+            }
+            if (domValue.style.backgroundColor.indexOf('rgb') === 0) {
+              var tempBGColor = formatRGB((domValue.style.backgroundColor || '').trim('#'));
+              document.getElementById('txtBACKGROUND').jscolor.fromRGB(tempBGColor[0], tempBGColor[1], tempBGColor[2]);
+            } else {
+              document.getElementById('txtBACKGROUND').value = (domValue.style.backgroundColor || '').trim('#');
+            }
+          }
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            delete UE.plugins[thePlugins].sdectrl;
+          }
+        };
+        dialog.onok = function() {
+          if ($G('txtID').value == '') {
+            alert('请输入控件ID');
+            return false;
+          }
+          var newOpt = opt || {};
+          newOpt.desc = $('#txtDESC').val();
+          newOpt.notdel = $G('txtNOTDEL').checked ? 1 : 0;
+          newOpt.originalmode = newOpt.mode = $('#txtMODE').val();
+
+          if (!!domCtrl) {
+            var domValue = ctrl.getValueElement();
+            domCtrl.setAttribute('id', $G('txtID').value);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            } else {
+              domValue.style.color = '';
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            } else {
+              domValue.style.backgroundColor = '';
+            }
+            //修改
+            ctrl.setOpt(newOpt);
+            ctrl.reset();
+            delete UE.plugins[thePlugins].sdectrl;
+          } else {
+            domCtrl = UE.dom.domUtils.createElement(document, 'div', {
+              class: 'sde-ctrl sde-section',
+              contenteditable: false,
+              id: $G('txtID').value,
+              'sde-type': 'section',
+            });
+            var domValue = UE.dom.domUtils.createElement(document, 'p', {
+              class: 'sde-value',
+              contenteditable: ($('#txtMODE').val() === "EDITOR"),
+            });
+            domValue.innerHTML = newOpt.desc;
+            domCtrl.appendChild(domValue);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            }
+            //新建
+            editor.execCommand('insertControl', domCtrl, newOpt)
+          }
+
+        };
+      })(UE);
+    </script>
+  </body>
+
+</html>

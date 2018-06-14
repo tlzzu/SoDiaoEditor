@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文本输入</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="../js/jQuery.v3.1.2-pre.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../core.js"></script>
+    <script src="../jscolor-2.0.4//jscolor.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">*</span></th>
+          <th><span>描述</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtDESC" placeholder="必填项"></td>
+        </tr>
+        <tr>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtREQUIRED" type="checkbox" /> 是否必填 </label>
+          </td>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtSTRICTVERIFY" type="checkbox" /> 强制校验 </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="checkbox inline"><input id="txtNOTDEL" type="checkbox" /> 不许删除 </label>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <th><span>校验正则</span> </th>
+          <th><span>控件模式</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input id="txtVERIFY" placeholder="校验正则" type="text" />
+          </td>
+          <td>
+            <select id="txtMODE">
+                        <option value="EDITOR" selected="selected">编辑模式</option>
+                        <option value="READONLY">只读模式</option>
+                      </select>
+          </td>
+        </tr>
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span>背景色</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor {required:false}" class="jscolor" placeholder="字体颜色">
+          </td>
+          <td>
+            <input type="text" id="txtBACKGROUND" placeholder="背景颜色" class="jscolor {required:false}">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      /*
+      text运行时结构：
+      <span class="sde-ctrl" sde-type="text" sde-right="." id="abc1" sde-model="%7B%22mode%22%3A%22EDITOR%22%2C%22notdel%22%3A0%2C%22strictverify%22%3A0%2C%22verify%22%3A%22%5E%5B0-9%5D*%24%22%2C%22required%22%3A0%2C%22desc%22%3A%22%E6%95%B4%E6%95%B0%E6%8E%A7%E4%BB%B6%22%2C%22remotedata%22%3A%7B%22url%22%3A%22%2Fdata%2Fjson1.json%22%2C%22method%22%3A%22get%22%2C%22data%22%3A%7B%22name%22%3A%22tl%22%7D%7D%7D"
+        contenteditable="false">
+        <span class="sde-value" sde-left="[" sde-right="]" contenteditable="true" >整数控件</span>
+      </span>
+      其中新建控件时必须满足结构：
+      <span class="sde-ctrl" sde-type="text" sde-right="." id="abc1" contenteditable="false">
+        <span class="sde-value" sde-left="[" sde-right="]" contenteditable="true" >整数控件</span>
+      </span>
+      其余内容会通过insertControl命令进行创建。理论上不显示你用span还是div来承载控件，但不同控件在页面中的表现形式不同，推荐使用系统默认配置
+      */
+      (function(UE) {
+        $('#txtVERIFY').popover({
+          placement: 'top',
+          trigger: 'click',
+          html: true,
+          title: '示例：',
+          content: function() {
+            var htmls = [];
+            htmls.push('文本：\\S<br/>');
+            htmls.push('整数：^[0-9]*$<br/>');
+            htmls.push('小数：^-?\\d+\\.\\d+$<br/>');
+            htmls.push('身份证：^\\d{15}|\\d{}18$<br/>');
+            return htmls.join('');
+          }
+        });
+        window.rgb = function() {
+          return arguments;
+        };
+
+        function formatRGB(rgbStr) {
+          return eval(rgbStr);
+        };
+        var thePlugins = 'sdectrltext',
+          ctrl, opt, domCtrl;
+        window.onload = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            ctrl = UE.plugins[thePlugins].sdectrl; //获取具体的组件
+            opt = ctrl.getOpt(),
+              domCtrl = ctrl.getCtrlElement();
+            var domValue = ctrl.getValueElement();
+            $('#txtID').val(domCtrl.getAttribute('id'));
+            $('#txtDESC').val(opt.desc);
+            if (opt.required === 1) {
+              $G('txtREQUIRED').checked = true;
+            }
+            if (opt.strictverify === 1) {
+              $G('txtSTRICTVERIFY').checked = true;
+            }
+            if (opt.notdel === 1) {
+              $G('txtNOTDEL').checked = true;
+            }
+            $('#txtVERIFY').val(opt.verify);
+            $('#txtMODE').val(opt.mode);
+            if (domValue.style.color.indexOf('rgb') === 0) {
+              var tempColor = formatRGB((domValue.style.color || '').trim('#'));
+              document.getElementById('txtCOLOR').jscolor.fromRGB(tempColor[0], tempColor[1], tempColor[2]);
+            } else {
+              document.getElementById('txtCOLOR').value = (domValue.style.color || '').trim('#');
+            }
+            if (domValue.style.backgroundColor.indexOf('rgb') === 0) {
+              var tempBGColor = formatRGB((domValue.style.backgroundColor || '').trim('#'));
+              document.getElementById('txtBACKGROUND').jscolor.fromRGB(tempBGColor[0], tempBGColor[1], tempBGColor[2]);
+            } else {
+              document.getElementById('txtBACKGROUND').value = (domValue.style.backgroundColor || '').trim('#');
+            }
+          }
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            delete UE.plugins[thePlugins].sdectrl;
+          }
+        };
+        dialog.onok = function() {
+          if ($G('txtID').value == '') {
+            alert('请输入控件ID');
+            return false;
+          }
+          var newOpt = opt || {};
+          newOpt.desc = $('#txtDESC').val();
+          newOpt.required = $G('txtREQUIRED').checked ? 1 : 0;
+          newOpt.strictverify = $G('txtSTRICTVERIFY').checked ? 1 : 0;
+          newOpt.notdel = $G('txtNOTDEL').checked ? 1 : 0;
+          newOpt.verify = $('#txtVERIFY').val();
+          newOpt.mode = $('#txtMODE').val();
+          if (!!domCtrl) {
+            var domValue = ctrl.getValueElement();
+            domCtrl.setAttribute('id', $G('txtID').value);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            } else {
+              domValue.style.color = '';
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            } else {
+              domValue.style.backgroundColor = '';
+            }
+            //修改
+            ctrl.setOpt(newOpt);
+            domValue.innerHTML = newOpt.desc;
+            delete UE.plugins[thePlugins].sdectrl;
+          } else {
+            domCtrl = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-ctrl',
+              contenteditable: false,
+              id: $G('txtID').value,
+              'sde-type': 'text',
+              'sde-right': '.',
+            });
+            var domValue = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-value',
+              contenteditable: ($('#txtMODE').val() === "EDITOR"),
+              'sde-left': '[',
+              'sde-right': ']',
+            });
+            domValue.innerHTML = newOpt.desc;
+            domCtrl.appendChild(domValue);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            }
+            //新建
+            editor.execCommand('insertControl', domCtrl, newOpt)
+          }
+
+        };
+      })(UE);
+    </script>
+  </body>
+
+</html>

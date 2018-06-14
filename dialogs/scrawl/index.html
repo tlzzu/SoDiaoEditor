@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>涂鸦</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script type="text/javascript" src="../core.js"></script>
+    <link rel="stylesheet" type="text/css" href="scrawl.css?_=11292">
+  </head>
+
+  <body>
+    <div class="main" id="J_wrap">
+      <div class="hot">
+        <div class="drawBoard border_style1">
+          <!--<canvas id="J_brushBoard" class="brushBorad" width="540" height="450"></canvas>-->
+          <canvas id="J_brushBoard" class="brushBorad" width="600" height="440"></canvas>
+          <div id="J_picBoard" class="picBoard" style="width: 600px;height: 440px"></div>
+        </div>
+        <div id="J_operateBar" class="operateBar">
+          <span id="J_previousStep" class="previousStep">
+                <em class="icon"></em>
+                <em class="text">上一步</em>
+            </span>
+          <span id="J_nextStep" class="nextStep">
+                <em class="icon"></em>
+                <em class="text">下一步</em>
+            </span>
+          <span id="J_clearBoard" class="clearBoard">
+                <em class="icon"></em>
+                <em class="text">清空</em>
+            </span>
+          <span id="J_sacleBoard" class="scaleBoard">
+                <em class="icon"></em>
+                <em class="text">缩放背景</em>
+            </span>
+        </div>
+      </div>
+      <div class="drawToolbar border_style1">
+        <div id="J_colorBar" class="colorBar"></div>
+        <div id="J_brushBar" class="sectionBar">
+          <em class="brushIcon"></em>
+          <a href="javascript:void(0)" class="size1">1</a>
+          <a href="javascript:void(0)" class="size2">3</a>
+          <a href="javascript:void(0)" class="size3">5</a>
+          <a href="javascript:void(0)" class="size4">7</a>
+        </div>
+        <div id="J_eraserBar" class="sectionBar">
+          <em class="eraserIcon"></em>
+          <a href="javascript:void(0)" class="size1">1</a>
+          <a href="javascript:void(0)" class="size2">3</a>
+          <a href="javascript:void(0)" class="size3">5</a>
+          <a href="javascript:void(0)" class="size4">7</a>
+        </div>
+        <div class="sectionBar">
+          <div id="J_addImg" class="addImgH">
+            <em class="icon"></em>
+            <em class="text">添加背景</em>
+            <form method="post" id="fileForm" enctype="multipart/form-data" class="addImgH_form" target="up">
+              <input type="file" name="upfile" id="J_imgTxt" title="添加背景图片" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp" />
+            </form>
+            <iframe name="up" style="display: none"></iframe>
+          </div>
+        </div>
+        <div class="sectionBar">
+          <span id="J_removeImg" class="removeImg">
+                <em class="icon"></em>
+                <em class="text">删除背景</em>
+            </span>
+        </div>
+        <div class="sectionBar">
+          <label for="txtWidth">宽：<input type="number" id="txtWidth" name="txtWidth" onchange="resetScrawlSize()" min="0" max="600"  style="width:40px;"/> px</label>
+        </div>
+        <div class="sectionBar">
+          <label for="txtHeight">高：<input type="number" id="txtHeight" name="txtHeight"  onchange="resetScrawlSize()" min="0" max="440"  style="width:40px;"/> px</label>
+        </div>
+      </div>
+    </div>
+    <div id="J_maskLayer" class="maskLayerNull"></div>
+
+    <script type="text/javascript" src="scrawl.js?_=128320191"></script>
+    <script type="text/javascript">
+      var node_h = document.getElementById('txtHeight'),
+        node_w = document.getElementById('txtWidth');
+      var settings = {
+          drawBrushSize: 3, //画笔初始大小
+          drawBrushColor: "#4bacc6", //画笔初始颜色
+          colorList: ['c00000', 'ff0000', 'ffc000', 'ffff00', '92d050', '00b050', '00b0f0', '0070c0', '002060', '7030a0', 'ffffff',
+            '000000', 'eeece1', '1f497d', '4f81bd', 'c0504d', '9bbb59', '8064a2', '4bacc6', 'f79646'
+          ], //画笔选择颜色
+          saveNum: 10 //撤销次数
+        },
+        thePlugins = "scrawl";
+
+      var editImg = UE.plugins[thePlugins].sdectrl,
+        scrawlObj;
+
+
+      function getBase64ImgHeightWidth(base64, func) {
+        var img = document.createElement('img');
+        img.addEventListener('load', function() {
+          func({
+            height: this.height,
+            width: this.width
+          });
+        });
+        img.src = base64;
+      }
+
+      function reset(opt) {
+        var J_brushBoard = document.getElementById('J_brushBoard'),
+          J_picBoard = document.getElementById('J_picBoard');
+        var base64 = scrawlObj.getCanvasData(),
+          img = document.createElement('img');
+        settings.drawBrushColor = scrawlObj.brushColor;
+        J_brushBoard.width = opt.width;
+        J_brushBoard.height = opt.height;
+        img.style.width = J_picBoard.style.width = opt.width + 'px';
+        img.style.height = J_picBoard.style.height = opt.height + 'px';
+        img.src = 'data:image/png;base64,' + base64;
+        scrawlObj = new scrawl(settings);
+        scrawlObj.setCanvasData(img);
+        J_picBoard.innerHTML = img.outerHTML
+      }
+      //初始化高和宽度
+      function initScrawlSize(opt) {
+        node_h.value = opt.height;
+        node_w.value = opt.width;
+      }
+
+      function resetScrawlSize() {
+        var h = 440,
+          w = 600;
+        if (parseInt(node_h.value) > h) {
+          node_h.value = h
+        } else {
+          h = parseInt(node_h.value);
+        }
+
+        if (parseInt(node_w.value) > w) {
+          node_w.value = w
+        } else if (parseInt(node_w.value) < 270) {
+          node_w.value = w = 270
+        } else {
+          w = parseInt(node_w.value);
+        }
+        reset({
+          width: w,
+          height: h
+        });
+      }
+      if (editImg !== undefined) {
+        getBase64ImgHeightWidth(editImg.src, function(opt) {
+          var J_brushBoard = document.getElementById('J_brushBoard');
+          J_brushBoard.width = opt.width;
+          J_brushBoard.height = opt.height;
+          var J_picBoard = document.getElementById('J_picBoard');
+          J_picBoard.style.width = opt.width + 'px';
+          J_picBoard.style.height = opt.height + 'px';
+          //应该先变小
+          scrawlObj = new scrawl(settings);
+
+          scrawlObj.setCanvasData(editImg);
+          initScrawlSize(opt)
+          scrawlObj.isCancelScrawl = false;
+          scrawlObj.isEditCanvas = true;
+        })
+      } else {
+        scrawlObj = new scrawl(settings);
+        scrawlObj.isCancelScrawl = false;
+        initScrawlSize({
+          width: 600,
+          height: 440
+        });
+
+      }
+      dialog.onok = function() {
+        exec(scrawlObj);
+        return false;
+      };
+
+      dialog.oncancel = function() {
+        scrawlObj.isCancelScrawl = true;
+        if (UE.plugins[thePlugins].sdectrl) {
+          delete UE.plugins[thePlugins].sdectrl;
+        }
+      };
+    </script>
+  </body>
+
+</html>

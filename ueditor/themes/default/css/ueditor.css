@@ -928,7 +928,7 @@ div.edui-box {
 }
 
 .edui-default  .edui-for-charts  .edui-icon {
-    background: url( ../images/charts.png ) no-repeat 2px 3px!important;
+    background: url(../images/charts.png) no-repeat 2px 3px!important;
 }
 
 .edui-default  .edui-for-inserttitlecol  .edui-icon {
@@ -942,6 +942,7 @@ div.edui-box {
 .edui-default  .edui-for-simpleupload  .edui-icon {
     background-position: -380px 0px;
 }
+
 /*splitbutton*/
 .edui-default .edui-toolbar .edui-splitbutton-body .edui-arrow,
 .edui-default .edui-toolbar .edui-menubutton-body .edui-arrow {
@@ -1033,7 +1034,9 @@ div.edui-box {
     background-color: #ffffff;
     width:auto;
     height:auto;
-
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .edui-default .edui-popup .edui-shadow {

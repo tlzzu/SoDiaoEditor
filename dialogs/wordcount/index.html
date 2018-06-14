@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>字数统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../core.js"></script>
+    <style>
+      fieldset {
+        font-size: 12px;
+        border: 1px solid #d4d4d4;
+      }
+      
+      table tr {
+        line-height: 20px;
+      }
+      
+      .textalignright {
+        text-align: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <fieldset style="height: 110px;">
+      <legend>统计信息</legend>
+      <table style="width: 100%;">
+        <tr>
+          <td>总数量</td>
+          <td class="textalignright" id="totalCount"></td>
+        </tr>
+        <tr>
+          <td>文字数量</td>
+          <td class="textalignright" id='totalWordCount'></td>
+        </tr>
+        <tr>
+          <td>图片数量</td>
+          <td class="textalignright" id='totalImgCount'></td>
+        </tr>
+      </table>
+    </fieldset>
+
+
+    <script>
+      var thePlugins = "sdewordcount";
+
+      (function() {
+        window.onload = function() {
+          document.querySelectorAll
+          document.getElementById('totalCount').innerHTML = editor.getContentLength();
+          document.getElementById('totalWordCount').innerHTML = editor.getContentLength(true);
+          document.getElementById('totalImgCount').innerHTML = editor.document.querySelectorAll('img').length;
+        };
+      })();
+    </script>
+  </body>
+
+</html>

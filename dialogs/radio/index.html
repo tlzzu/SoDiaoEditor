@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单选框</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="../js/jQuery.v3.1.2-pre.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../core.js"></script>
+    <script src="../jscolor-2.0.4//jscolor.min.js"></script>
+    <link rel="stylesheet" href="../jsoneditor/jsoneditor.min.css">
+    <script src="../jsoneditor/jsoneditor.min.js"></script>
+    <script src="../axios/axios.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">*</span></th>
+          <th><span>描述</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtDESC" placeholder="必填项"></td>
+        </tr>
+        <tr>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtREQUIRED" type="checkbox" /> 是否必填 </label>
+          </td>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtNOTDEL" type="checkbox" /> 不许删除 </label>
+          </td>
+        </tr>
+        <tr style="display:none">
+          <td> <input type="text" id="txtDEFAULTVALUE" readonly="readonly" placeholder="默认值"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><span>控件模式</span> </th>
+          <th><span></span> </th>
+        </tr>
+        <tr>
+          <td> <select id="txtMODE">
+              <option value="EDITOR" selected="selected">编辑模式</option>
+              <option value="READONLY">只读模式</option>
+            </select></td>
+          <td>
+
+          </td>
+
+        </tr>
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span>背景色</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor {required:false}" class="jscolor" placeholder="字体颜色">
+          </td>
+          <td>
+            <input type="text" id="txtBACKGROUND" placeholder="背景颜色" class="jscolor {required:false}">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color: white;">
+            <div class="tabbable">
+              <ul class="nav nav-tabs" style="margin-bottom: 5px;">
+                <li class="active"><a href="#tab1" data-toggle="tab">固定选项</a></li>
+                <li><a href="#tab2" data-toggle="tab">动态数据</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                  <select id="txtBINDINGDATA" style="width:100%;" multiple="multiple" onclick="BINDINGDATAClick(this)" class="span14">
+                              <!--<option value="111">1111</option>
+                              <option value="222">2222</option>-->
+                          </select>
+                  <div class="input-prepend">
+                    <div class="input-append" style="margin-right:10px;">
+                      <button class="btn disabled" type="button">值</button>
+                      <input type="text" id="txtInputValue" onchange="(($G('txtInputDesc').value=='')?$G('txtInputDesc').value = $G('txtInputValue').value:'')" class="span2" placeholder="值" style="width:100px;border-radius:0 4px 4px 0;" />
+                    </div>
+                    <div class="input-append" style="margin-right:10px;">
+                      <button class="btn disabled" type="button">描述</button>
+                      <input type="text" id="txtInputDesc" class="span2" placeholder="描述" style="width:100px;border-radius:0 4px 4px 0;" />
+                    </div>
+                    <div class="btn-group pull-right">
+                      <a title="添加" class="btn btn-primary" onclick="add()" href="#"><i class="icon-white icon-plus"></i></a>
+                      <a title="编辑" class="btn" href="#" onclick="edit()"><i class="icon-edit"></i></a>
+                      <a title="上移" class="btn" href="#" onclick="upMove()"><i class="icon-arrow-up"></i></a>
+                      <a title="下移" class="btn" href="#" onclick="downMove()"><i class="icon-arrow-down"></i></a>
+                      <!-- <a title="设置默认" class="btn" href="#" onclick="setDefault()"><i class="icon-ok-circle"></i></a> -->
+                      <a title="删除" class="btn" href="#" onclick="deleteOption()"><i class="icon-trash"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                  <div id="jsoneditorRequest" style="width:255px;height:300px;float: left;"></div>
+                  <div style="float: left;padding: 100px 5px;">
+                    <input type="button" value="请求" onclick="doRequest()">
+                  </div>
+                  <div id="jsoneditorResponse" style="width:255px;height:300px;float: left;"></div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <style>
+      .popover {
+        color: black;
+      }
+      
+      .popover .sde-popover-a {
+        color: blue;
+      }
+    </style>
+    <script>
+      /*
+      radio运行时结构：
+      <span id="gj" sde-right="." sde-type="radio" class="sde-ctrl" sde-model="%7B%22mode%22%3A%22EDITOR%22%2C%22notdel%22%3A0%2C%22strictverify%22%3A0%2C%22required%22%3A0%2C%22multi%22%3A1%2C%22desc%22%3A%22%E6%84%9F%E8%A7%89%22%2C%22bindingdata%22%3A%5B%7B%20%22label%22%3A%20%22%E6%84%9F%E8%A7%89%E5%BE%88%E5%A5%BD%22%2C%20%22value%22%3A%201%20%7D%2C%20%7B%20%22label%22%3A%20%22%E6%84%9F%E8%A7%89%E4%B8%80%E8%88%AC%22%2C%20%22value%22%3A%202%20%7D%5D%7D"
+                bindingdata='[{ "label": "感觉很好", "value": 1 }, { "label": "感觉一般", "value": 2 }]' contenteditable="false">
+        <span contenteditable="true" sde-left="[" sde-right="]"  class="sde-value">
+          <label contenteditable="false"><input type="radio"  name="radio_33"  value='{ "label": "感觉很好", "value": 1 }'>感觉很好</label>
+          <label contenteditable="false"><input type="radio" name="radio_33" value='{ "label": "感觉一般", "value": 2 }'>感觉一般</label>
+        </span>
+      </span>
+      其中新建控件时必须满足结构：
+      <span id="gj" sde-right="." sde-type="radio" class="sde-ctrl"  contenteditable="false">
+        <span contenteditable="true" sde-left="[" sde-right="]"  class="sde-value">
+        </span>
+      </span>
+      其余内容会通过insertControl命令进行创建
+      */
+      function BINDINGDATAClick(t) {
+        if (t.selectedIndex < 0) //点击了 但是没有选中项
+          return;
+        $G('txtInputValue').value = t.value;
+        $G('txtInputDesc').value = t.options[t.selectedIndex].text;
+      }
+
+      function add() {
+        var ss = $G('txtBINDINGDATA');
+        //if (ss.selectedIndex < 0)
+        //    return;
+        //判断是否重复
+        var tempoptions = ss.options,
+          iscan = true,
+          txtInputValue = $G('txtInputValue').value,
+          txtInputDesc = $G('txtInputDesc').value;
+        //debugger;
+        for (var i = 0, l = tempoptions.length; i < l; i++) {
+          if (tempoptions[i].value == txtInputValue) {
+            alert(txtInputValue + '值已经存在，值不可重复');
+            iscan = false;
+          } else if (tempoptions[i].text == txtInputDesc) {
+            alert(txtInputDesc + '描述已经存在，描述不可重复');
+            iscan = false;
+          }
+          if (!iscan) break;
+        }
+        if (iscan) {
+          var option = document.createElement("option");
+          option.text = $G('txtInputDesc').value;
+          option.value = $G('txtInputValue').value;
+          if (option.text == '') {
+            alert('添加描述不可谓空！');
+            return;
+          }
+          if (option.value == '') {
+            alert('添加值不可谓空！');
+            return;
+          }
+          try {
+            // 对于更早的版本IE8 
+            tempoptions.add(option, x.options[null]);
+          } catch (e) {
+            tempoptions.add(option, null);
+          }
+        }
+        $G('txtInputValue').value = '';
+        $G('txtInputDesc').value = '';
+      }
+
+      function edit() {
+        var ss = $G('txtBINDINGDATA');
+        if (ss.selectedIndex < 0)
+          return;
+        //判断是否重复
+        var tempoptions = ss.options,
+          iscan = true,
+          txtInputValue = $G('txtInputValue').value,
+          txtInputDesc = $G('txtInputDesc').value;
+        if (txtInputDesc == '') {
+          alert('修改描述不可谓空！');
+          return;
+        }
+        if (txtInputValue == '') {
+          alert('修改值不可谓空！');
+          return;
+        }
+        for (var i = 0, l = tempoptions.length; i < l; i++) {
+          if (i != ss.selectedIndex) { //不能有相同的
+            if (tempoptions[i].value == txtInputValue) {
+              alert(txtInputValue + '值已经存在，值不可重复');
+              iscan = false;
+            } else if (tempoptions[i].text == txtInputDesc) {
+              alert(txtInputDesc + '描述已经存在，描述不可重复');
+              iscan = false;
+            }
+          }
+          if (!iscan) break;
+        }
+        if (iscan) {
+          ss.options[ss.selectedIndex].value = txtInputValue;
+          ss.options[ss.selectedIndex].text = txtInputDesc;
+        }
+        $G('txtInputValue').value = '';
+        $G('txtInputDesc').value = '';
+      }
+
+      function upMove() {
+        var ss = $G('txtBINDINGDATA');
+        if (ss.selectedIndex < 0)
+          return;
+        if (ss.selectedIndex == 0) return;
+        var currentIndex = ss.selectedIndex;
+        var opt = ss.options[currentIndex - 1];
+        ss.options.remove(currentIndex - 1);
+        ss.options.add(opt, currentIndex);
+      }
+
+      function deleteDefaultOption() {
+        var doc = $G('txtDEFAULTVALUE');
+        doc.value = '';
+        doc.setAttribute('sde-value', '');
+      }
+
+      function downMove() {
+        var ss = $G('txtBINDINGDATA');
+        if (ss.selectedIndex < 0)
+          return;
+        if (ss.selectedIndex + 1 == ss.options.length) return;
+        var currentIndex = ss.selectedIndex;
+        var opt = ss.options[currentIndex + 1];
+        ss.options.remove(currentIndex + 1);
+        ss.options.add(opt, currentIndex);
+      }
+
+      function deleteOption() {
+        var ss = $G('txtBINDINGDATA');
+        if (ss.selectedIndex < 0)
+          return;
+        if ($G('txtDEFAULTVALUE').getAttribute('sde-value') == ss.value) {
+          $G('txtDEFAULTVALUE').setAttribute('sde-value', '');
+          $G('txtDEFAULTVALUE').value = '';
+        }
+        ss.options.remove(ss.selectedIndex);
+      }
+      var jsoneditorRequest = new JSONEditor(document.getElementById('jsoneditorRequest'), {
+        mode: 'code'
+      });
+      var poweredByRequest = document.createElement('a'),
+        domPoweredByRequest = jsoneditorRequest.container.querySelector('.jsoneditor-poweredBy');
+      poweredByRequest.innerHTML = '提示'
+      poweredByRequest.href = "javascript:void(0);";
+      poweredByRequest.setAttribute('style', 'font-size: 8pt;position: absolute;right: 0;top: 0;padding: 10px;');
+      $(poweredByRequest).popover({
+        placement: 'bottom',
+        trigger: 'click',
+        html: true,
+        title: '提示(<a class="sde-popover-a" target="_blank" href="https://github.com/axios/axios">点击查看axios官网</a>)：',
+        content: '使用axios组件发起请求，格式要求如下：<br/>{"url":"xxx","method":"get","headers":{},"data":{}}<br/>'
+      });
+      domPoweredByRequest.style.display = 'none';
+      domPoweredByRequest.parentElement.insertBefore(poweredByRequest, domPoweredByRequest);
+
+      var jsoneditorResponse = new JSONEditor(document.getElementById('jsoneditorResponse'), {
+        modes: ['code', 'tree']
+      });
+      var poweredByResponse = document.createElement('a'),
+        domPoweredByResponse = jsoneditorResponse.container.querySelector('.jsoneditor-poweredBy');
+      poweredByResponse.innerHTML = '返回格式要求'
+      poweredByResponse.href = "javascript:void(0);";
+      poweredByResponse.setAttribute('style', 'font-size: 8pt;position: absolute;right: 0;top: 0;padding: 10px;');
+      $(poweredByResponse).popover({
+        placement: 'bottom',
+        trigger: 'click',
+        html: true,
+        title: '格式要求：',
+        content: '为兼容iOS设备，对返回格式要求如下：<br/>{"data":[{"label":"男","value":1},{"label":"女","value":2}]}'
+      });
+      domPoweredByResponse.style.display = 'none';
+      domPoweredByResponse.parentElement.insertBefore(poweredByResponse, domPoweredByResponse);
+
+      function doRequest() {
+        axios(jsoneditorRequest.get()).then(function(res) {
+          jsoneditorResponse.set(res.data);
+        }).catch(function(err) {
+          console.error(err);
+          jsoneditorResponse.set({
+            msg: '请求失败，请联系管理员！'
+          });
+        })
+      }
+      (function(UE) {
+
+        window.rgb = function() {
+          return arguments;
+        };
+
+        function formatRGB(rgbStr) {
+          return eval(rgbStr);
+        };
+        var thePlugins = 'sdectrlradio',
+          ctrl, opt, domCtrl;
+        window.onload = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            ctrl = UE.plugins[thePlugins].sdectrl; //获取具体的组件
+            opt = ctrl.getOpt(),
+              domCtrl = ctrl.getCtrlElement();
+            var domValue = ctrl.getValueElement();
+            $('#txtID').val(domCtrl.getAttribute('id'));
+            $('#txtDESC').val(opt.desc);
+            if (opt.required === 1) {
+              $G('txtREQUIRED').checked = true;
+            }
+            if (opt.notdel === 1) {
+              $G('txtNOTDEL').checked = true;
+            }
+            $('#txtMODE').val(opt.mode);
+            if (domValue.style.color.indexOf('rgb') === 0) {
+              var tempColor = formatRGB((domValue.style.color || '').trim('#'));
+              document.getElementById('txtCOLOR').jscolor.fromRGB(tempColor[0], tempColor[1], tempColor[2]);
+            } else {
+              document.getElementById('txtCOLOR').value = (domValue.style.color || '').trim('#');
+            }
+            if (domValue.style.backgroundColor.indexOf('rgb') === 0) {
+              var tempBGColor = formatRGB((domValue.style.backgroundColor || '').trim('#'));
+              document.getElementById('txtBACKGROUND').jscolor.fromRGB(tempBGColor[0], tempBGColor[1], tempBGColor[2]);
+            } else {
+              document.getElementById('txtBACKGROUND').value = (domValue.style.backgroundColor || '').trim('#');
+            }
+            // bindingdata 远程信息
+            var html = [];
+            var datas = opt.bindingdata;
+            if (datas && datas != undefined && datas != null) {
+              for (var i = 0, l = datas.length; i < l; i++) {
+                html.push('<option value="' + datas[i].value + '" ')
+                if (datas[i].selected != undefined && datas[i].selected == 1) {
+                  html.push(' selected="selected" ');
+                }
+                html.push('>' + datas[i].label + '</option>');
+              }
+            }
+            $G('txtBINDINGDATA').innerHTML = html.join('');
+            jsoneditorRequest.set(opt.remotedata || {});
+          }
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            delete UE.plugins[thePlugins].sdectrl;
+          }
+        };
+        dialog.onok = function() {
+          if ($G('txtID').value == '') {
+            alert('请输入控件ID');
+            return false;
+          }
+          var newOpt = opt || {};
+          newOpt.desc = $('#txtDESC').val();
+          newOpt.required = $G('txtREQUIRED').checked ? 1 : 0;
+          newOpt.notdel = $G('txtNOTDEL').checked ? 1 : 0;
+          newOpt.mode = $('#txtMODE').val();
+
+          var txtBINDINGDATA = $G('txtBINDINGDATA'),
+            selectIndex = txtBINDINGDATA.selectedIndex,
+            selectOptions = txtBINDINGDATA.options,
+            selectValue = $G('txtDEFAULTVALUE').getAttribute('sde-value'),
+            selectDesc = '',
+            selectData = [];
+          if (selectOptions != undefined && selectOptions.length > 0) {
+            for (var i = 0, l = selectOptions.length; i < l; i++) {
+              selectData.push({
+                value: selectOptions[i].value,
+                label: selectOptions[i].text,
+                selected: selectValue == selectOptions[i].value ? 1 : 0
+              });
+              if (selectValue == selectOptions[i].value)
+                selectDesc = selectOptions[i].text;
+            }
+          }
+          newOpt.bindingdata = selectData;
+          newOpt.remotedata = jsoneditorRequest.get();
+          if (!newOpt.remotedata || !newOpt.remotedata.url) {
+            newOpt.remotedata = null;
+          }
+          if (!!domCtrl) { //编辑
+            var domValue = ctrl.getValueElement();
+            domCtrl.setAttribute('id', $G('txtID').value);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            } else {
+              domValue.style.color = '';
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            } else {
+              domValue.style.backgroundColor = '';
+            }
+            //修改
+            ctrl.setOpt(newOpt);
+            ctrl.refreshData(true);
+            //domValue.innerHTML = newOpt.desc;
+            delete UE.plugins[thePlugins].sdectrl;
+          } else {
+            domCtrl = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-ctrl',
+              contenteditable: false,
+              id: $G('txtID').value,
+              'sde-type': 'radio',
+              'sde-right': '.',
+            });
+            var domValue = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-value',
+              contenteditable: ($('#txtMODE').val() === "EDITOR"),
+              'sde-left': '[',
+              'sde-right': ']',
+            });
+            domValue.innerHTML = newOpt.desc;
+            domCtrl.appendChild(domValue)
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            }
+            //新建
+            editor.execCommand('insertControl', domCtrl, newOpt)
+          }
+        };
+      })(UE);
+    </script>
+  </body>
+
+</html>

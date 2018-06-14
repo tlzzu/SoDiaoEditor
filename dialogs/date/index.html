@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>日期控件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="../js/jQuery.v3.1.2-pre.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../core.js"></script>
+    <script src="../jscolor-2.0.4//jscolor.min.js"></script>
+    <link rel="stylesheet" href="../flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="../flatpickr/themes/material_blue.css">
+    <link rel="stylesheet" href="../flatpickr/plugins/confirmDate/confirmDate.css">
+    <script src="../flatpickr/flatpickr.min.js"></script>
+    <script src="../flatpickr/plugins/confirmDate/confirmDate.js"></script>
+    <script src="../flatpickr/l10n/zh.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span><span class="label label-important">*</span></th>
+          <th><span>描述</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtDESC" placeholder="必填项"></td>
+        </tr>
+
+        <tr>
+          <th><span>最小值</span> </th>
+          <th><span>最大值</span> </th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtMin" placeholder="最小值"></td>
+          <td><input type="text" id="txtMax" placeholder="最大值"></td>
+        </tr>
+        <tr>
+          <th><span>输入格式</span><span class="label label-important">*</span></th>
+          <th><span>默认值</span> </th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtFORMAT" placeholder="输入格式 必填"></td>
+          <td><input type="text" id="txtDEFVALUE" placeholder="默认值"></td>
+        </tr>
+        <tr>
+          <th><span>控件模式</span> </th>
+          <th><span></span> </th>
+        </tr>
+        <tr>
+          <td><select id="txtMODE">
+                    <option value="EDITOR" selected="selected">编辑模式</option>
+                    <option value="READONLY">只读模式</option>
+                  </select></td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtREQUIRED" type="checkbox" /> 是否必填 </label>
+          </td>
+          <td style="background-color: white;">
+            <label class="checkbox inline"><input id="txtSTRICTVERIFY" type="checkbox" /> 强制校验 </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="checkbox inline"><input id="txtNOTDEL" type="checkbox" /> 不许删除 </label>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span>背景色</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor {required:false}" class="jscolor" placeholder="字体颜色">
+          </td>
+          <td>
+            <input type="text" id="txtBACKGROUND" placeholder="背景颜色" class="jscolor {required:false}">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      /*
+          date控件运行时结构如下：
+          <span class="sde-ctrl" id="kssj" sde-type="date" sde-model="%7B%22mode%22%3A%22EDITOR%22%2C%22notdel%22%3A0%2C%22strictverify%22%3A0%2C%22required%22%3A0%2C%22desc%22%3A%22%22%2C%22defvalue%22%3A%222018-5-7%2016%3A08%3A09%22%2C%22format%22%3A%22%7Byyyy%7D-%7BMM%7D-%7Bdd%7D%20%7Bhh%7D%3A%7Bmm%7D%3A%7Bss%7D%22%2C%22min%22%3A%22%22%2C%22max%22%3A%22%22%7D">
+            <span class="sde-value" contenteditable="true" sde-left="[" sde-right="]">开始时间</span>
+          </span>
+          其中新建控件时必须满足结构：
+          <span class="sde-ctrl" id="kssj" sde-type="date" >
+            <span class="sde-value" contenteditable="true" sde-left="[" sde-right="]">描述内容</span>
+          </span>
+          */
+
+
+      function initFlatpickr() {
+        new Flatpickr(document.getElementById('txtMin'), {
+          enableTime: true,
+          enableSeconds: true,
+          time_24hr: true,
+          allowInput: true,
+          static: true,
+          "locale": "zh" // locale for this instance only
+        });
+        var max = new Flatpickr(document.getElementById('txtMax'), {
+          enableTime: true,
+          enableSeconds: true,
+          time_24hr: true,
+          allowInput: true,
+          static: true,
+          "locale": "zh" // locale for this instance only
+        });
+        new Flatpickr(document.getElementById('txtDEFVALUE'), {
+          enableTime: true,
+          enableSeconds: true,
+          time_24hr: true,
+          allowInput: true,
+          static: true,
+          "locale": "zh" // locale for this instance only
+        });
+      }
+
+
+
+      (function(UE) {
+        $('#txtFORMAT').popover({
+          placement: 'right',
+          trigger: 'click',
+          html: true,
+          title: '输入格式：',
+          content: function() {
+            return `
+            {yy} 年 年的后两位<br/>
+            {yyyy} 年 四位年<br/>
+            {M} 月 1到12月<br/>
+            {MM} 月 01到12月<br/>
+            {d} 日 1到31<br/>
+            {h}或{hh} 小时 00到23时<br/>
+            {m}或{mm} 分钟 00到59分<br/>
+            {s} 秒 0到59秒<br/>
+            {ss} 秒 00到59秒<br/>
+            如：<b style="background:#e5e5e5;">{yyyy}-{MM}-{dd} {hh}:{mm}:{ss}</b><br/>
+            转换后：<b style="background:#e5e5e5;">2017-01-01 00:00:00</b>
+            `;
+          }
+        });
+        var thePlugins = 'sdectrldate',
+          ctrl, opt, domCtrl;
+        window.onload = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            ctrl = UE.plugins[thePlugins].sdectrl; //获取具体的组件
+            opt = ctrl.getOpt(),
+              domCtrl = ctrl.getCtrlElement();
+            var domValue = ctrl.getValueElement();
+            $('#txtID').val(domCtrl.getAttribute('id'));
+            $('#txtDESC').val(opt.desc);
+            $('#txtMin').val(opt.min);
+            $('#txtMax').val(opt.max);
+            $('#txtDEFVALUE').val(opt.defvalue);
+            $('#txtFORMAT').val(opt.format);
+            if (opt.required === 1) {
+              $G('txtREQUIRED').checked = true;
+            }
+            if (opt.strictverify === 1) {
+              $G('txtSTRICTVERIFY').checked = true;
+            }
+            if (opt.notdel === 1) {
+              $G('txtNOTDEL').checked = true;
+            }
+            $('#txtMODE').val(opt.mode);
+            if (domValue.style.color.indexOf('rgb') === 0) {
+              var tempColor = formatRGB((domValue.style.color || '').trim('#'));
+              document.getElementById('txtCOLOR').jscolor.fromRGB(tempColor[0], tempColor[1], tempColor[2]);
+            } else {
+              document.getElementById('txtCOLOR').value = (domValue.style.color || '').trim('#');
+            }
+            if (domValue.style.backgroundColor.indexOf('rgb') === 0) {
+              var tempBGColor = formatRGB((domValue.style.backgroundColor || '').trim('#'));
+              document.getElementById('txtBACKGROUND').jscolor.fromRGB(tempBGColor[0], tempBGColor[1], tempBGColor[2]);
+            } else {
+              document.getElementById('txtBACKGROUND').value = (domValue.style.backgroundColor || '').trim('#');
+            }
+          }
+          initFlatpickr()
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            delete UE.plugins[thePlugins].sdectrl;
+          }
+        };
+        dialog.onok = function() {
+          if ($G('txtID').value == '') {
+            alert('请输入控件ID');
+            return false;
+          }
+          var newOpt = opt || {};
+          newOpt.desc = $('#txtDESC').val();
+          newOpt.required = $G('txtREQUIRED').checked ? 1 : 0;
+          newOpt.strictverify = $G('txtSTRICTVERIFY').checked ? 1 : 0;
+          newOpt.notdel = $G('txtNOTDEL').checked ? 1 : 0;
+          newOpt.mode = $('#txtMODE').val();
+          newOpt.min = $('#txtMin').val();
+          newOpt.max = $('#txtMax').val();
+          newOpt.format = $('#txtFORMAT').val();
+          newOpt.defvalue = $('#txtDEFVALUE').val();
+          if (!!domCtrl) {
+            //修改
+            var domValue = ctrl.getValueElement();
+            domCtrl.setAttribute('id', $G('txtID').value);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            } else {
+              domValue.style.color = '';
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            } else {
+              domValue.style.backgroundColor = '';
+            }
+            //修改
+            ctrl.setOpt(newOpt);
+            domValue.innerHTML = newOpt.desc;
+            delete UE.plugins[thePlugins].sdectrl;
+          } else {
+            //新增
+            domCtrl = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-ctrl',
+              contenteditable: false,
+              id: $G('txtID').value,
+              'sde-type': 'date',
+              'sde-right': '.',
+            });
+            var domValue = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-value',
+              contenteditable: ($('#txtMODE').val() === "EDITOR"),
+              'sde-left': '[',
+              'sde-right': ']',
+            });
+            domValue.innerHTML = newOpt.desc;
+            domCtrl.appendChild(domValue);
+            if ($('#txtCOLOR').val().length > 0) {
+              domValue.style.color = '#' + $('#txtCOLOR').val();
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domValue.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            }
+            editor.execCommand('insertControl', domCtrl, newOpt);
+          }
+        };
+      })(UE)
+    </script>
+  </body>
+
+</html>

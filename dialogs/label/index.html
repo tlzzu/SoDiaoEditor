@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>标签控件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/ie.css">
+    <![endif]-->
+    <script src="../js/jQuery.v3.1.2-pre.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../core.js"></script>
+    <script src="../jscolor-2.0.4//jscolor.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th><span>控件ID</span></th>
+          <th><span>描述</span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtID" placeholder="必填项"></td>
+          <td><input type="text" id="txtDESC" placeholder="必填项"></td>
+        </tr>
+        <tr>
+          <th><span>控件内容</span></th>
+          <th><span></span></th>
+        </tr>
+        <tr>
+          <td><input type="text" id="txtVALUE" placeholder="必填项"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><span>字体颜色</span> </th>
+          <th><span>背景色</span> </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="txtCOLOR" class="jscolor {required:false}" class="jscolor" placeholder="字体颜色">
+          </td>
+          <td>
+            <input type="text" id="txtBACKGROUND" placeholder="背景颜色" class="jscolor {required:false}">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      /*
+              label结构：
+              <span id="label1" sde-type="label" class="sde-ctrl sde-label" title="[可选]">
+                label内容
+              </span>
+              其中：id，class 为必须项，class可以扩展，有自定义样式
+              */
+      (function(UE) {
+        window.rgb = function() {
+          return arguments;
+        };
+
+        function formatRGB(rgbStr) {
+          return eval(rgbStr);
+        };
+        var thePlugins = 'sdectrllabel',
+          ctrl, opt, domCtrl;
+        window.onload = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            //修改
+            ctrl = UE.plugins[thePlugins].sdectrl;
+            opt = ctrl.getOpt() || {};
+            domCtrl = ctrl.getCtrlElement();
+            $('#txtID').val(domCtrl.getAttribute('id') || '');
+            $('#txtDESC').val(opt.desc || '');
+            $('#txtVALUE').val(domCtrl.innerHTML);
+            if (domCtrl.style.color.indexOf('rgb') === 0) {
+              var tempColor = formatRGB((domCtrl.style.color || '').trim('#'));
+              document.getElementById('txtCOLOR').jscolor.fromRGB(tempColor[0], tempColor[1], tempColor[2]);
+            } else {
+              document.getElementById('txtCOLOR').value = (domCtrl.style.color || '').trim('#');
+            }
+            if (domCtrl.style.backgroundColor.indexOf('rgb') === 0) {
+              var tempBGColor = formatRGB((domCtrl.style.backgroundColor || '').trim('#'));
+              document.getElementById('txtBACKGROUND').jscolor.fromRGB(tempBGColor[0], tempBGColor[1], tempBGColor[2]);
+            } else {
+              document.getElementById('txtBACKGROUND').value = (domCtrl.style.backgroundColor || '').trim('#');
+            }
+          }
+        };
+        dialog.oncancel = function() {
+          if (UE.plugins[thePlugins].sdectrl) {
+            delete UE.plugins[thePlugins].sdectrl;
+          }
+        };
+        dialog.onok = function() {
+          var newOpt = opt || {};
+          newOpt.desc = $('#txtDESC').val();
+          if (!!domCtrl) {
+            domCtrl.setAttribute('id', $G('txtID').value);
+            if ($('#txtCOLOR').val().length > 0) {
+              domCtrl.style.color = '#' + $('#txtCOLOR').val();
+            } else {
+              domCtrl.style.color = '';
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domCtrl.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            } else {
+              domCtrl.style.backgroundColor = '';
+            }
+            domCtrl.setAttribute('title', newOpt.desc);
+            ctrl.setOpt(newOpt);
+            domCtrl.innerHTML = $('#txtVALUE').val();
+            delete UE.plugins[thePlugins].sdectrl;
+          } else {
+            //新增
+            domCtrl = UE.dom.domUtils.createElement(document, 'span', {
+              class: 'sde-ctrl sde-label',
+              id: $G('txtID').value,
+              'sde-type': 'label',
+              title: newOpt.desc
+            });
+            domCtrl.innerHTML = $('#txtVALUE').val();
+            if ($('#txtCOLOR').val().length > 0) {
+              domCtrl.style.color = '#' + $('#txtCOLOR').val();
+            }
+            if ($('#txtBACKGROUND').val().length > 0) {
+              domCtrl.style.backgroundColor = '#' + $('#txtBACKGROUND').val();
+            }
+            //新建
+            editor.execCommand('insertControl', domCtrl, newOpt)
+          }
+        };
+
+      })(UE);
+    </script>
+  </body>
+
+</html>
