@@ -76,6 +76,34 @@ sde.off('ready',ready);//移除之前绑定的事件
 
 销毁当前SDE的实例，如果是在vue中使用可以在vue生命周期中的destroyed中使用。
 
+## getDialog(opt) 
+
+获取弹窗对象，使用示例如下：
+```js
+var dialog =  sde.getDialog({
+  title: '测试弹窗',
+  name: 'test-dialogs',
+  url: 'https://www.baidu.com/',//如果不带有http，则为相对路径比如 'text/index.html'//这个就是文本控件维护
+  style: 'width:400px;height:300px',
+  buttons: [{
+    className: 'edui-okbutton',
+    label: '确定',
+      onclick: function () {
+        dialog.close(true)
+      }
+    },
+    {
+    className: 'edui-cancelbutton',
+    label: '取消',
+      onclick: function () {
+        dialog.close(false)
+      }
+    }
+  ]
+});
+dialog.open();//打开弹窗
+```
+
 ## insertHTML(html)
 
 在光标处插入html代码片段。
