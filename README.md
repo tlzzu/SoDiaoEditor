@@ -1,3 +1,9 @@
+# SDE V5 版本已发布
+
+详见：[http://sde4.tlzzu.com/](http://sde4.tlzzu.com/)
+
+> 需强制清理缓存
+
 # SDE v4 alpha版
 
 有事儿请邮箱：[dd@sodiao.org](mailto://dd@sodiao.org)在线演示：[http://sde4.tlzzu.com/](http://sde4.tlzzu.com/)
