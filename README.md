@@ -1,6 +1,6 @@
 # SDE V5 版本已发布
 
-详见：[http://sde4.tlzzu.com/](http://sde4.tlzzu.com/)
+详见：[http://www.tlzzu.com/](http://www.tlzzu.com/)
 
 > 需强制清理缓存
 
