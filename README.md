@@ -4,6 +4,8 @@
 
 V5 QQ 群：766756295
 
+![image](data/img/qrcode.png)
+
 > 需强制清理缓存
 
 # SDE v4 alpha版
