@@ -2,12 +2,12 @@
 
 详见：[http://www.tlzzu.com/](http://www.tlzzu.com/)
 
-V5 QQ 讨论群：766756295（有消息会在上面发布）
+V5 QQ 讨论群：766756295（旧群已满，有消息会在新群发布）
 
 
 > 需强制清理缓存
 
-# SDE v4 alpha版
+# SDE v5 alpha版
 
 邮箱：[tlzzu@qq.com](mailto://tlzzu@qq.com) 
 
