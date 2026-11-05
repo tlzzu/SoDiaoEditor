@@ -9,7 +9,9 @@ V5 QQ 讨论群：766756295（有消息会在上面发布）
 
 # SDE v4 alpha版
 
-有事儿请邮箱：[tlzzu@qq.com](mailto://tlzzu@qq.com)在线演示：[http://www.tlzzu.com/](http://www.tlzzu.com/)
+邮箱：[tlzzu@qq.com](mailto://tlzzu@qq.com) 
+
+在线演示：[http://www.tlzzu.com/](http://www.tlzzu.com/)
 
 > 最近观察到有人仿照原来SDE v2的结构改了一版，UI布局各种抄袭，然后在世面上拿出去贩卖，在此不作评价，毕竟身在国内已然习惯。本人在此承诺本版本永久免费，欢迎各位使用
 
@@ -35,7 +37,7 @@ V5 QQ 讨论群：766756295（有消息会在上面发布）
 
 ## 需求&bug 提交
 
-1.  可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
+1.  可邮件至[tlzzu@qq.com](mailto://tlzzu@qq.com)；
 
 ## 打赏
 
